@@ -21,5 +21,4 @@ router.post("/addClient", async (req, res) => {
 });
 
 //route to get the client info
-router.get();
 export default router;
