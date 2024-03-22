@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Route to add a new legal service provider
 // expertise area should store an arrays
-// isVerified, phone_number, address,availability, profile_image_url should be added
+// isVerified->bool, phone_number, address,availability, profile_image_url should be added
 app.post("/addProvider", async (req, res) => {
   try {
     const { name, email, expertise_area } = req.body;
