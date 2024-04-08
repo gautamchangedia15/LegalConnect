@@ -1,24 +1,10 @@
 import express from "express";
+import { addClient } from "../controllers/clientController.js";
 
 const router = express.Router();
 
 // Route to add a new client
-router.post("/addClient", async (req, res) => {
-  try {
-    const { name, email, phone_number } = req.body;
-    const docRef = await db.collection("clients").add({
-      name,
-      email,
-      phone_number,
-    });
-    res
-      .status(201)
-      .json({ message: "Client added successfully", id: docRef.id });
-  } catch (error) {
-    console.error("Error adding client:", error);
-    res.status(500).json({ error: "Failed to add client" });
-  }
-});
+router.route("/addClient").post(addClient);
 
 //route to get the client info
 export default router;

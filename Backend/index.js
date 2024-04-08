@@ -7,14 +7,14 @@ import providers from "./routes/providers.js";
 const PORT = 3000;
 const app = express();
 
-app.use(cors()); //check if origin and credentials are to be given as parameters
+app.use(cors()); //to check if origin and credentials are to be given as parameters
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//routes
-//route 1: clients
+
+//route for clients
 app.use("/clients", clients);
-//route 2:LSP
+//route for LSP
 app.use("/provider", providers);
 
 app.listen(PORT, () => {
