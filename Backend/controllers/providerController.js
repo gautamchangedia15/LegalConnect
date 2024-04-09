@@ -28,8 +28,9 @@ const getAll = async (req, res) => {
     res.status(500).send("Error retrieving provider data");
   }
 };
+
 // add a new legal service provider
-// expertise area should store an arrays
+// expertise area is stored an arrays
 // isVerified->bool, phone_number, address,availability, profile_image_url and other data of LSP be added
 const addProfile = async (req, res) => {
   try {
@@ -49,7 +50,7 @@ const addProfile = async (req, res) => {
   }
 };
 
-//get LSP based upon it id
+//get LSP based upon its id
 const getProfile = async (req, res) => {
   try {
     const providerId = req.params.id;
