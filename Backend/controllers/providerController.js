@@ -22,7 +22,10 @@ const getAll = async (req, res) => {
       id: doc.id,
       ...doc.data(),
     }));
-    res.json(providers);
+    res.json({
+      success: true,
+      providers,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error retrieving provider data");

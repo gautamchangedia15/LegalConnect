@@ -1,10 +1,14 @@
 import express from "express";
-import { getAll,addProfile,getProfile } from "../controllers/providerController.js";
+import {
+  getAll,
+  addProfile,
+  getProfile,
+} from "../controllers/providerController.js";
 
 const router = express.Router();
 
 //get LSP based upon search filters
-router.route("/getAll").get(getAll)
+router.route("/getall").get(getAll);
 //add LSP
 router.route("/addProfile").post(addProfile);
 

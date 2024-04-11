@@ -7,10 +7,15 @@ import providers from "./routes/provider.js";
 const PORT = 3000;
 const app = express();
 
-app.use(cors()); //to check if origin and credentials are to be given as parameters
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 //route for clients
 app.use("/client", clients);
