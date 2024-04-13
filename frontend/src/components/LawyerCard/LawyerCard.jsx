@@ -5,9 +5,6 @@ import { Link } from "react-router-dom";
 
 const LawyerCard = () => {
   const { providers } = useSelector((state) => state.provider.providers);
-  useEffect(() => {
-    console.log("results==", providers);
-  }, [providers]);
 
   return (
     <div>
@@ -15,7 +12,7 @@ const LawyerCard = () => {
       <div className="grid md:grid-cols-2 justify-between mb-8 gap-12 sm:grid-cols-1">
         {providers ? (
           providers.map((lawyer) => (
-            <Link to={`/providerprofile/${lawyer.id}`}>
+            <Link key={lawyer.id} to={`/service/providerprofile/${lawyer.id}`}>
               <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row gap-4  ">
                 <div className="w-full md:w-48 h-48 md:h-full bg-gray-200 ">
                   <img
