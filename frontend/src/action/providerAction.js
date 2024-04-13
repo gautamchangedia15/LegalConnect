@@ -8,15 +8,14 @@ import {
 import { server } from "../store";
 
 // action for get all provider
-export const getProvider = (keyword) => async (dispatch) => {
+export const getProvider = (city, exp) => async (dispatch) => {
   try {
     dispatch({
       type: GET_PROVIDER_REQUEST,
     });
     const { data } = await axios.get(
-      `${server}/provider/getall?keyword=${keyword}`
+      `${server}/provider/getall?city=${city}&expertise_area=${exp}`
     );
-
     dispatch({
       type: GET_PROVIDER_SUCCESS,
       payload: data,
