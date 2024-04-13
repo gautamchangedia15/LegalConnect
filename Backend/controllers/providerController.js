@@ -36,11 +36,12 @@ const getAll = async (req, res) => {
 // isVerified->bool, phone_number, address,availability, profile_image_url and other data of LSP be added
 const addProfile = async (req, res) => {
   try {
-    const { name, email, expertise_area } = req.body;
+    const { name, email, expertise_area, city } = req.body;
     const docRef = await providerCollection.add({
       name,
       email,
       expertise_area,
+      city,
     });
     res.status(201).json({
       message: "Provider data submitted for verification",
