@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import LawyerCard from '../LawyerCard/LawyerCard';
 
 const ServicePage = () => {
@@ -46,9 +47,11 @@ const ServicePage = () => {
           </button>
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Recommended Lawyers</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Results</h2>
           <div className=" flex wrap justify-between mb-8 gap-12">
+            <Link to="/lawyerProfile">
             <LawyerCard />
+            </Link>
             <LawyerCard />
           </div>
         </div>

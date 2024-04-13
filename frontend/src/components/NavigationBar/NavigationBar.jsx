@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
 
 function NavigationBar() {
     return (
@@ -23,7 +24,11 @@ function NavigationBar() {
                 <div>
                     <nav>
                         <ul className='flex justify-between gap-12'>
+                            
+                            <Link to={'/service'}>
                             <li>Find a service</li>
+                            </Link>
+                            
                             <li>About</li>
                             <li>Contact</li>
                         </ul>
