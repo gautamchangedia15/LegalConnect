@@ -52,7 +52,7 @@ const ServicePage = () => {
             <Link to="/lawyerProfile">
             <LawyerCard />
             </Link>
-            <LawyerCard />
+            {/* <LawyerCard /> */}
           </div>
         </div>
       </div>

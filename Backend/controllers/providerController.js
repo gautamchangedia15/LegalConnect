@@ -41,6 +41,7 @@ const addProfile = async (req, res) => {
       name,
       email,
       expertise_area,
+      city
     });
     res.status(201).json({
       message: "Provider data submitted for verification",

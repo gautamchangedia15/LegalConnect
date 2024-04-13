@@ -3,7 +3,7 @@ import RatingStar from '../LawyerCard/Rating/RatingStar';
 
 const LawyerProfile = () => {
   return (
-    <div className="bg-gray-100 min-h-screen flex justify-center items-start py-8">
+    <div className="bg-gray-100 min-h-screen flex justify-center items-start py-8 mt-8">
       <div className="max-w-5xl w-full px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="md:flex">
