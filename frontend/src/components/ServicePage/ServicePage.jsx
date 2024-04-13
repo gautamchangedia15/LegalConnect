@@ -9,7 +9,7 @@ const ServicePage = () => {
   const dispatch = useDispatch();
   const searchHandler = (e) => {
     e.preventDefault();
-    dispatch(getProvider(city, exp));
+    dispatch(getProvider(city, exp, ""));
   };
 
   return (
