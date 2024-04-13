@@ -2,17 +2,25 @@ import admin from "../firebase.js";
 
 const db = admin.firestore();
 const providerCollection = db.collection("providers");
-
 const getAll = async (req, res) => {
   //Building query based on available paramters passed by req
   let query = providerCollection;
-  for (const paraName in req.query) {
-    //as expertise_area is a array
-    if (paraName === "expertise_area") {
-      query = query.where(paraName, "array-contains", req.query[paraName]);
-    } else {
-      query = query.where(paraName, "==", req.query[paraName]);
-    }
+
+  const name = req.query.name;
+  const exp = req.query.expertise_area;
+  const city = req.query.city;
+  if (name) {
+    let Lname = name.toLowerCase();
+    query = query
+      .where("name", ">=", Lname)
+      .where("name", "<=", Lname + "\uf8ff");
+  }
+  if (exp) {
+    query = query.where("expertise_area", "array-contains", exp);
+  }
+
+  if (city) {
+    query = query.where("city", "==", city);
   }
 
   //Retriving the data based upon query from database
@@ -36,12 +44,16 @@ const getAll = async (req, res) => {
 // isVerified->bool, phone_number, address,availability, profile_image_url and other data of LSP be added
 const addProfile = async (req, res) => {
   try {
-    const { name, email, expertise_area, city } = req.body;
+    const { name, email, expertise_area, city, education, about, propExp } =
+      req.body;
     const docRef = await providerCollection.add({
       name,
       email,
       expertise_area,
       city,
+      education,
+      about,
+      propExp,
     });
     res.status(201).json({
       message: "Provider data submitted for verification",

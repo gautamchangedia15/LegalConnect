@@ -19,7 +19,7 @@ export default function App() {
           <Route exact path="/service" element={<ServicePage />} />
           <Route
             exact
-            path="/providerprofile/:id"
+            path="/service/providerprofile/:id"
             element={<LawyerProfile />}
           />
         </Routes>

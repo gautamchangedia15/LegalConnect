@@ -1,10 +1,14 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { thunk } from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
-import { providerReducer } from "./reducer/providerReducer";
+import {
+  providerReducer,
+  singleProviderReducer,
+} from "./reducer/providerReducer";
 
 const reducer = combineReducers({
   provider: providerReducer,
+  providerDetails: singleProviderReducer,
 });
 
 let initialState = {};
