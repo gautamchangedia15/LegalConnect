@@ -3,6 +3,9 @@ import {
   GET_PROVIDER_FAIL,
   GET_PROVIDER_REQUEST,
   GET_PROVIDER_SUCCESS,
+  GET_SINGLE_PROVIDER_REQUEST,
+  GET_SINGLE_PROVIDER_SUCCESS,
+  GET_SINGLE_PROVIDER_FAIL,
 } from "../constants/providerConstant";
 
 // provider reducer
@@ -24,6 +27,42 @@ export const providerReducer = (
         providers: action.payload,
       };
     case GET_PROVIDER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+// for single provider
+
+// provider reducer
+export const singleProviderReducer = (
+  state = { provider: {}, loading: false },
+  action
+) => {
+  switch (action.type) {
+    case GET_SINGLE_PROVIDER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        provider: {},
+      };
+    case GET_SINGLE_PROVIDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        provider: action.payload,
+      };
+    case GET_SINGLE_PROVIDER_FAIL:
       return {
         ...state,
         loading: false,
