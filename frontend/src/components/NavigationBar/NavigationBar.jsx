@@ -15,7 +15,7 @@ function NavigationBar() {
                     <input placeholder='Search...' type="text" className='w-[300px] bg-white h-10 border border-gray-300 rounded-md px-2 py-1' />
                 </div>
                 <div>
-                    <button className='bg-blue-500 text-white px-4 py-2 rounded-md'>Search</button>
+                    <button className='bg-green-900 text-white px-4 py-2 rounded-md'>Search</button>
                 </div>
             </div>
             <div>
@@ -35,7 +35,10 @@ function NavigationBar() {
                             </Link>
                             
                             <li>About</li>
-                            <li>Contact</li>
+                            <Link to={'/clientLogin'}>
+                            <li>Login</li>
+                            </Link>
+                            
                         </ul>
                     </nav>
                 </div>

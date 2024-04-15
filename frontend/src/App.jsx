@@ -9,6 +9,9 @@ import ServicePage from './components/ServicePage/ServicePage'
 import LawyerProfile from './components/LawyerProfile/LawyerProfile'
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
+import ClientLogin from './components/Authentication/Client/Login/ClientLogin'
+import ClientRegistration from './components/Authentication/Client/Register/ClientRegistration'
+
 export default function App() {
   return (
     <> 
@@ -18,6 +21,8 @@ export default function App() {
         <Route exact path='/' element={<Home/>} />
         <Route exact path='/service' element={<ServicePage/>} />
         <Route exact path='/lawyerProfile' element={<LawyerProfile/>} />
+        <Route exact path='/clientLogin' element={<ClientLogin/>} />
+        <Route exact path='/clientRegistration' element={<ClientRegistration/>} />
       </Routes>
     </Router>
     {/* <Home/> */}
