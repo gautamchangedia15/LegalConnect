@@ -6,6 +6,7 @@ dotenv.config({ path: "./config/config.env" });
 import providerAuth from "./routes/auth/providerAuth.js"
 import clients from "./routes/client.js";
 import providers from "./routes/provider.js";
+import booking from "./routes/booking.js"
 import { addClient, clientLogin, clientLogout, currentClient } from "./controllers/clientController.js";
 import cookieParser from "cookie-parser";
 // import { verifyToken } from './middleware/authMiddleware.js';
@@ -46,6 +47,9 @@ app.use("/auth",providerAuth)
 app.use("/client", clients);
 //route for LSP
 app.use("/provider", providers);
+
+//route for booking
+app.use("/booking",booking)
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

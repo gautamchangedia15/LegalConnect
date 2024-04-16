@@ -111,11 +111,7 @@ const providerLogin = async (req, res) => {
       const provider = providerRef.docs[0].data();
       const isMatch = await bcrypt.compare(password, provider.password);
       if (isMatch) {
-        const token = jwt.sign(
-          { userId: providerRef.docs[0].id, email: provider.email },
-          process.env.JWT_SECRET_KEY,
-          { expiresIn: "1h" }
-        );
+        const token=jwtConfig.generateAccessToken({ userId: providerRef.docs[0].id, email: provider.email });
         res.cookie("token", token, {
           httpOnly: true,
           secure: true,
