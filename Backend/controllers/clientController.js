@@ -56,8 +56,6 @@ const clientLogin = async (req, res) =>{
         let newww= clientRef.docs[0].id
         res.status(200).json({ message: "Client logged in successfully",newww });
         console.log(token);
-
-
       } else {
         res.status(401).json({ error: "Invalid password" });
       }

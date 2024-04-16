@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from 'dotenv';
 dotenv.config({ path: "./config/config.env" });
+import providerAuth from "./routes/auth/providerAuth.js"
 import clients from "./routes/client.js";
 import providers from "./routes/provider.js";
 import { addClient, clientLogin, clientLogout, currentClient } from "./controllers/clientController.js";
@@ -38,6 +39,9 @@ app.get('/api/client/current', currentClient)
   // const { userId, email } = req.user;
   // res.json({ userId, email });
 // });
+
+//route for auth of provider
+app.use("/auth",providerAuth)
 //route for clients
 app.use("/client", clients);
 //route for LSP
