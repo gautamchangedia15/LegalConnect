@@ -6,7 +6,7 @@ import express from "express";
 // const admin = require('firebase-admin');
 
 import jwt from 'jsonwebtoken'
-
+import {generateAccessToken,verifyAccessToken} from "../config/jwtConfig.js"
 // import authenticateToken from '../middleware/authMiddleware.js';
 
 const app = express();
@@ -52,7 +52,7 @@ const clientLogin = async (req, res) =>{
       const isMatch = await bcrypt.compare(password, client.password);
       if (isMatch) {
         //const token = jwt.sign({ userId: clientRef.docs[0].id, email: client.email }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
-        const token=jwtConfig.generateAccessToken({ userId: clientRef.docs[0].id, email: client.email });
+        const token=generateAccessToken({ userId: clientRef.docs[0].id, email: client.email });
         res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' });
         let newww= clientRef.docs[0].id
         res.status(200).json({ message: "Client logged in successfully",newww });
