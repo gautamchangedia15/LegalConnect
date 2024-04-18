@@ -40,7 +40,7 @@ const addClient=async (req, res) => {
     }
 }
 
-const clientLogin = async (req, res) =>{
+const clientLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -51,11 +51,14 @@ const clientLogin = async (req, res) =>{
       const client = clientRef.docs[0].data();
       const isMatch = await bcrypt.compare(password, client.password);
       if (isMatch) {
-        //const token = jwt.sign({ userId: clientRef.docs[0].id, email: client.email }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
-        const token=jwtConfig.generateAccessToken({ userId: clientRef.docs[0].id, email: client.email });
+        const token = jwt.sign(
+          { userId: clientRef.docs[0].id, email: client.email },
+          process.env.JWT_SECRET_KEY,
+          { expiresIn: '1h' }
+        );
         res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' });
-        let newww= clientRef.docs[0].id
-        res.status(200).json({ message: "Client logged in successfully",newww });
+        let newww = clientRef.docs[0].id;
+        res.status(200).json({ message: "Client logged in successfully", newww });
         console.log(token);
       } else {
         res.status(401).json({ error: "Invalid password" });
@@ -65,7 +68,7 @@ const clientLogin = async (req, res) =>{
     console.error("Error logging in client:", error);
     res.status(500).json({ error: "Failed to log in client" });
   }
-}
+};
 
 const clientLogout = async (req, res) => {
   try {

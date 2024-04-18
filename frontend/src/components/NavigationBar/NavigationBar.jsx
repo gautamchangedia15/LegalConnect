@@ -21,7 +21,6 @@ function NavigationBar() {
           {" "}
           <div>Logo</div>
         </Link>
-        <div>Appointment</div>
       </div>
       <div className="flex justify-between gap-4 items-center ">
         <div>
@@ -54,6 +53,9 @@ function NavigationBar() {
 
               <li>About</li>
               <li>Contact</li>
+              <Link to={'/clientLogin'}>
+              <li>Login</li>
+              </Link>
             </ul>
           </nav>
         </div>
