@@ -63,13 +63,17 @@ const clientLogin = async (req, res) => {
           { userId: clientRef.docs[0].id, email: client.email },
           process.env.JWT_SECRET_KEY,
 
-          { expiresIn: '1h' }
+          { expiresIn: "10d" }
         );
-        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' });
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+        });
         let newww = clientRef.docs[0].id;
-        res.status(200).json({ message: "Client logged in successfully", newww });
-
-        console.log(token);
+        res
+          .status(200)
+          .json({ message: "Client logged in successfully", newww });
       } else {
         res.status(401).json({ error: "Invalid password" });
       }
@@ -108,8 +112,6 @@ const currentClient = async (req, res) => {
           .json({ success: false, error: "JWT verification failed" });
       }
 
-      console.log("Decoded JWT payload:", decoded);
-
       try {
         // Retrieve the document from Firestore by ID
         const docRef = db.collection("clients").doc(decoded.userId);
@@ -122,6 +124,7 @@ const currentClient = async (req, res) => {
         }
 
         const clientData = docSnapshot.data();
+        delete clientData.password;
         return res.status(200).json({ success: true, data: clientData });
       } catch (error) {
         console.error("Error fetching document:", error);
