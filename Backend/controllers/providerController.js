@@ -50,6 +50,7 @@ const addProfile = async (req, res) => {
       name,
       email,
       password,
+      domain,
       expertise_area,
       city,
       education,
@@ -65,6 +66,9 @@ const addProfile = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+
+      domain,
+
       role: "provider",
       expertise_area,
       city,

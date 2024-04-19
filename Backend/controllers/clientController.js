@@ -27,6 +27,7 @@ const addClient = async (req, res) => {
     if (!querySnapshot.empty) {
       return res.status(400).send("Email already exists");
     }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const docRef = await db.collection("clients").add({
@@ -43,6 +44,7 @@ const addClient = async (req, res) => {
     res.status(500).json({ error: "Failed to add client" });
   }
 };
+
 const clientLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -60,17 +62,13 @@ const clientLogin = async (req, res) => {
         const token = jwt.sign(
           { userId: clientRef.docs[0].id, email: client.email },
           process.env.JWT_SECRET_KEY,
-          { expiresIn: "1h" }
+
+          { expiresIn: '1h' }
         );
-        res.cookie("token", token, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "none",
-        });
+        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' });
         let newww = clientRef.docs[0].id;
-        res
-          .status(200)
-          .json({ message: "Client logged in successfully", newww });
+        res.status(200).json({ message: "Client logged in successfully", newww });
+
         console.log(token);
       } else {
         res.status(401).json({ error: "Invalid password" });
@@ -81,6 +79,7 @@ const clientLogin = async (req, res) => {
     res.status(500).json({ error: "Failed to log in client" });
   }
 };
+
 const clientLogout = async (req, res) => {
   try {
     res.clearCookie("token");

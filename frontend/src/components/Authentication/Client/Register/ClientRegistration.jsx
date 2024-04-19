@@ -13,7 +13,7 @@ const ClientRegistration = () => {
     e.preventDefault();
     console.log('Signing up:', { name, email, password });
     try {
-      const response = await axios.post(`${server}/api/client/register`, {
+      const response = await axios.post(`${server}/auth/client/register`, {
         name,
         email,
         password,
