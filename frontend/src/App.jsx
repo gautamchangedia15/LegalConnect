@@ -15,38 +15,19 @@ import ClientRegistration from './components/Authentication/Client/Register/Clie
 import LawyerRegister from "./components/Authentication/Lawyer/Register/LawyerRegister";
 import AdditionalDetailsPage from "./components/Authentication/Lawyer/Register/AdditionalDetailsPage";
 import LawyerLogin from "./components/Authentication/Lawyer/Login/LawyerLogin";
+import AppointmentBooking from "./components/AppointmentBooking/AppointmentBooking";
 
 
 export default function App() {
   return (
     <>
-      <Router>
-        <NavigationBar />
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/service" element={<ServicePage />} />
-          <Route
-            exact
-            path="/service/providerprofile/:id"
-            element={<LawyerProfile />}
-          />
-          <Route exact path="/clientLogin" element={<ClientLogin />} />
-          <Route
-            exact
-            path="/clientRegistration"
-            element={<ClientRegistration />}
-          />
-        </Routes>
-      </Router>
-
-
-    <> 
+     
     <Router>
     <NavigationBar/>
       <Routes>
         <Route exact path='/' element={<Home/>} />
         <Route exact path='/service' element={<ServicePage/>} />
-        <Route exact path='/lawyerProfile' element={<LawyerProfile/>} />
+        <Route exact path='/service/providerprofile/:id' element={<LawyerProfile/>} />
         {/* Authentication */}
         {/* Client */}
         <Route exact path='/clientLogin' element={<ClientLogin/>} />
@@ -55,10 +36,13 @@ export default function App() {
         <Route exact path='/additional-details' element={<AdditionalDetailsPage/>} />
         <Route exact path="/lawyerLogin" element={<LawyerLogin/>}/>
         <Route exact path ='/lawyer' element={<LawyerRegister/>}/>
+        {/* Booking */}
+        <Route exact path="/service/providerprofile/appointment/:id" element= {<AppointmentBooking/>}/>
         
       </Routes>
-      <LawyerRegister/>
+      {/* <LawyerRegister/> */}
     </Router>
+    {/* <AppointmentBooking/> */}
 
       <Footer />
     </>
