@@ -1,20 +1,21 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config({ path: "./config/config.env" });
-import providerAuth from "./routes/auth/providerAuth.js"
-import clientAuth from "./routes/auth/clientAuth.js"
+import providerAuth from "./routes/auth/providerAuth.js";
+import clientAuth from "./routes/auth/clientAuth.js";
 import clients from "./routes/client.js";
 import providers from "./routes/provider.js";
 // import booking from "./routes/booking.js"
 
 import cookieParser from "cookie-parser";
+import { clientLogout, currentClient } from "./controllers/clientController.js";
 // import { verifyToken } from './middleware/authMiddleware.js';
 const PORT = 3000;
 const app = express();
-app.use(express.json())
-app.use(cookieParser())
+app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -31,21 +32,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // // Login client
 // app.post('/api/client/login', clientLogin )
 
-// // Logout Client
-// app.post('/api/client/logout', clientLogout)
+// Logout Client
+app.get("/api/client/logout", clientLogout);
 
 // // current user
-// app.get('/api/client/current', currentClient)
+app.get("/api/client/current", currentClient);
 // app.get('/api/client/profile', verifyToken, (req, res) => {
-  // Access authenticated user's data from req.user
-  // const { userId, email } = req.user;
-  // res.json({ userId, email });
+// Access authenticated user's data from req.user
+// const { userId, email } = req.user;
+// res.json({ userId, email });
 // });
 
 //route for auth of provider
-app.use("/auth/provider",providerAuth)
+app.use("/auth/provider", providerAuth);
 //route for auth of client
-app.use("/auth/client",clientAuth)
+app.use("/auth/client", clientAuth);
 //route for clients
 app.use("/client", clients);
 //route for LSP

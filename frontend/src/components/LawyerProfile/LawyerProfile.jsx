@@ -3,17 +3,26 @@ import RatingStar from "../LawyerCard/Rating/RatingStar";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProviderDetails } from "../../action/providerAction";
+import { useNavigate } from "react-router-dom";
 const LawyerProfile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { provider, loading } = useSelector((state) => state.providerDetails);
+  const navigate = useNavigate();
 
+  const { provider, loading } = useSelector((state) => state.providerDetails);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const clickHandler = () => {
+    if (!isAuthenticated) {
+      navigate("/clientLogin");
+    } else {
+      navigate(`/service/providerprofile/appointment/${id}`);
+    }
+  };
   useEffect(() => {
     dispatch(getProviderDetails(id));
   }, []);
 
   return (
-
     <>
       {loading ? (
         <h1>Loading...</h1>
@@ -87,10 +96,9 @@ const LawyerProfile = () => {
                       </div>
                     </div>
                     <div className="flex space-x-4">
-                      <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md">
-                        Contact
-                      </button>
-                      <button className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md">
+                      <button
+                        onClick={() => clickHandler()}
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md">
                         Schedule Consultation
                       </button>
                     </div>

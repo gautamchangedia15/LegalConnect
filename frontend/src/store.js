@@ -5,10 +5,15 @@ import {
   providerReducer,
   singleProviderReducer,
 } from "./reducer/providerReducer";
+import { loadClient, logoutClient } from "./reducer/clientsReducer";
+import { authReducer } from "./reducer/authReducer";
 
 const reducer = combineReducers({
   provider: providerReducer,
   providerDetails: singleProviderReducer,
+  user: loadClient,
+  auth: authReducer,
+  logoutClient: logoutClient,
 });
 
 let initialState = {};

@@ -8,7 +8,7 @@ const providerCollection = db.collection("providers");
 const addSlot = async (req, res) => {
   const providerId = req.params.id;
   const newSlot = req.body;
-  const givenDate=new Date(newSlot.date);
+  const givenDate = new Date(newSlot.date);
   const today = new Date();
   if (givenDate < today) {
     res
@@ -23,10 +23,12 @@ const addSlot = async (req, res) => {
     await providerRef.update({
       availability: admin.firestore.FieldValue.arrayUnion(newSlot),
     });
-    res.status(200).json({success:true,messsage:"Time Slot added Successfully!"})
+    res
+      .status(200)
+      .json({ success: true, messsage: "Time Slot added Successfully!" });
   } catch (err) {
     console.error("Error updating availability:", err);
-    res.status(500).json({success:false,error:"Error adding time slot"})
+    res.status(500).json({ success: false, error: "Error adding time slot" });
   }
 };
 
