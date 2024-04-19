@@ -131,13 +131,11 @@ const providerLogin = async (req, res) => {
         res
           .status(200)
           .json({ message: "Provider logged in successfully", neww });
-        console.log(token);
       } else {
         res.status(401).json({ error: "Invalid password" });
       }
     }
   } catch (error) {
-    console.error("Error logging in provider:", error);
     res
       .status(500)
       .json({ success: false, error: "Failed to log in provider" });
