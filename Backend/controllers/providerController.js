@@ -1,6 +1,6 @@
 import admin from "../firebase.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { generateAccessToken, verifyAccessToken } from "../config/jwtConfig.js";
 
 const db = admin.firestore();
 const providerCollection = db.collection("providers");
@@ -66,13 +66,18 @@ const addProfile = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+
       domain,
+
+      role: "provider",
       expertise_area,
       city,
       education,
       about,
       propExp,
       enrollementId,
+      verified: false,
+      availability: [], //to further store time slots
     });
     res.status(201).json({
       message: "Provider data submitted for verification",
@@ -113,7 +118,10 @@ const providerLogin = async (req, res) => {
       const provider = providerRef.docs[0].data();
       const isMatch = await bcrypt.compare(password, provider.password);
       if (isMatch) {
-        const token=jwtConfig.generateAccessToken({ userId: providerRef.docs[0].id, email: provider.email });
+        const token = generateAccessToken({
+          userId: providerRef.docs[0].id,
+          email: provider.email,
+        });
         res.cookie("token", token, {
           httpOnly: true,
           secure: true,
@@ -130,7 +138,9 @@ const providerLogin = async (req, res) => {
     }
   } catch (error) {
     console.error("Error logging in provider:", error);
-    res.status(500).json({ error: "Failed to log in provider" });
+    res
+      .status(500)
+      .json({ success: false, error: "Failed to log in provider" });
   }
 };
 
