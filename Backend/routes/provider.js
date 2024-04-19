@@ -4,7 +4,7 @@ import {
   addProfile,
   getProfile,
   providerLogin,
-  providerLogout
+  providerLogout,
 } from "../controllers/providerController.js";
 
 const router = express.Router();
@@ -18,5 +18,5 @@ router.route("/addprofile").post(addProfile);
 router.route("/getProfile/:id").get(getProfile);
 
 //Provider login
-router.route("/login").get()
+router.route("/login").get();
 export default router;
