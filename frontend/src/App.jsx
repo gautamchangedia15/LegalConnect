@@ -14,6 +14,9 @@ import ClientRegistration from "./components/Authentication/Client/Register/Clie
 import LawyerRegister from "./components/Authentication/Lawyer/Register/LawyerRegister";
 import AdditionalDetailsPage from "./components/Authentication/Lawyer/Register/AdditionalDetailsPage";
 import LawyerLogin from "./components/Authentication/Lawyer/Login/LawyerLogin";
+
+import AppointmentBooking from "./components/AppointmentBooking/AppointmentBooking";
+
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./action/clientAction";
 import { authenticate, logout } from "./action/authAction";
@@ -35,6 +38,7 @@ export default function App() {
 
   return (
     <>
+
       <Router>
         <NavigationBar />
         <Routes>
@@ -65,9 +69,13 @@ export default function App() {
             path="/lawyerRegistration"
             element={<LawyerRegister />}
           />
+                {/* Booking */}
+        <Route exact path="/service/providerprofile/appointment/:id" element= {<AppointmentBooking/>}/>
+        
         </Routes>
         {/* <LawyerRegister /> */}
       </Router>
+
 
       <Footer />
     </>
