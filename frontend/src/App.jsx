@@ -12,6 +12,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ClientLogin from "./components/Authentication/Client/Login/ClientLogin";
 import ClientRegistration from "./components/Authentication/Client/Register/ClientRegistration";
 import LawyerRegister from "./components/Authentication/Lawyer/Register/LawyerRegister";
+
 import LawyerLogin from "./components/Authentication/Lawyer/Login/LawyerLogin";
 
 import AppointmentBooking from "./components/AppointmentBooking/AppointmentBooking";
