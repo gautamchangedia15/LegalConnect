@@ -58,6 +58,27 @@ const ServicePage = () => {
                 <option value="Property Law">Property Law</option>
               </select>
             </div>
+            <div className="flex-1">
+              <label
+                htmlFor="practice-area"
+                className="block text-gray-700 font-medium mb-2">
+               Domain
+              </label>
+              <select
+                value={exp}
+                onChange={(e) => setexp(e.target.value)}
+                name="practice-area"
+                id="practice-area"
+                className="w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
+                <option value="Family">Lawyer</option>
+
+                <option value="Criminal Law">Notary</option>
+                <option value="Civil Law">Civil Law</option>
+                <option value="Family Law">Family Law</option>
+                <option value="Property Law">Property Law</option>
+              </select>
+            </div>
+            
           </div>
           <button
             onClick={(e) => searchHandler(e)}

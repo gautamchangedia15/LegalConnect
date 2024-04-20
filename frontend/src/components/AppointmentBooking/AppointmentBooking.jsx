@@ -37,7 +37,7 @@ const AppointmentBooking = () => {
     });
 
     return (
-        <div className="flex flex-col items-center space-y-4">
+        <div className="flex flex-col items-center space-y-4 mt-20 mb-8">
             <h2 className="text-lg font-semibold mb-4">Select Date</h2>
             <div className="flex flex-wrap justify-center gap-4">
                 {upcomingDates.map((date) => (
@@ -67,7 +67,7 @@ const AppointmentBooking = () => {
                 </div>
             </>
             <button
-                className="bg-green-800 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                className="bg-green-800 text-white px-4 py-2 rounded-md hover:bg-green-600 "
                 onClick={() => console.log(`Selected date: ${selectedDate}`)}
                 disabled={!selectedDate}
             >
