@@ -108,7 +108,7 @@ export default function App() {
         </Routes>
         {/* dashboard */}
 
-        {role && role == "Provider" ? (
+        {true ? (
           <Routes>
             <Route
               exact
@@ -139,6 +139,7 @@ export default function App() {
         ) : (
           <></>
         )}
+        {/* <Dashboard/> */}
       </Router>
 
       <Footer />

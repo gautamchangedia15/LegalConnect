@@ -37,6 +37,7 @@ function LawyerRegister() {
     dispatch(registerProvider(registrationData));
     navigate("/lawyerLogin");
     window.location.reload();
+
   };
 
   const handleNext = (e) => {
@@ -56,7 +57,9 @@ function LawyerRegister() {
   return (
     <div>
       <div className="container page-container">
+
         <div className={`page ${page === 1 ? "" : "hidden"}`}>
+
           <Page1
             onNext={handleNext}
             email={email}
@@ -65,14 +68,18 @@ function LawyerRegister() {
             setPassword={setPassword}
           />
         </div>
+
         <div className={`page ${page === 2 ? "" : "hidden"}`}>
+
           <Page2
             onPrev={handlePrev}
             handleSubmit={handleSubmit}
             name={name}
             setName={setName}
+
             expertise_area={expertise_area}
             setexpertise_area={setexpertise_area}
+
             city={city}
             setCity={setCity}
             education={education}
@@ -81,8 +88,10 @@ function LawyerRegister() {
             setAbout={setAbout}
             propExp={propExp}
             setPropExp={setPropExp}
+
             enrollementId={enrollementId}
             setenrollementId={setenrollementId}
+
           />
         </div>
       </div>
@@ -94,6 +103,7 @@ const Page1 = ({ onNext, email, setEmail, password, setPassword }) => {
   return (
     <div className=" page-1 min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="bg-white max-w-md w-full rounded-lg shadow-md overflow-hidden p-8">
+
         <h2 className="text-3xl font-extrabold text-gray-900 text-center py-6">
           Create your Lawyer account
         </h2>
@@ -135,9 +145,11 @@ const Page1 = ({ onNext, email, setEmail, password, setPassword }) => {
                 />
               </div>
               <div className="flex justify-center">
+
                 <button
                   onClick={onNext}
                   className="next-button bg-indigo-500 w-full text-white p-2 rounded-md mt-4">
+
                   Next
                 </button>
               </div>
@@ -154,8 +166,10 @@ const Page2 = ({
   handleSubmit,
   name,
   setName,
+
   expertise_area,
   setexpertise_area,
+
   city,
   setCity,
   education,
@@ -164,8 +178,10 @@ const Page2 = ({
   setAbout,
   propExp,
   setPropExp,
+
   enrollementId,
   setenrollementId,
+
 }) => {
   return (
     <div className=" page-2 min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -176,7 +192,9 @@ const Page2 = ({
           </h2>
         </div>
         <form className=" mt-8 space-y-6" onSubmit={handleSubmit} noValidate>
+
           <div className="justify-center flex  w-full gap-12 text-center">
+
             <ProfilePhotoInput />
           </div>
           <div className="additional-details rounded-md shadow-sm -space-y-px">
@@ -212,6 +230,7 @@ const Page2 = ({
                 placeholder="Enter your expertise area"
                 value={expertise_area}
                 onChange={(e) => setexpertise_area(e.target.value)}
+
               />
             </div>
             <div>
@@ -295,8 +314,10 @@ const Page2 = ({
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Enter your enrollment ID"
+
                 value={enrollementId}
                 onChange={(e) => setenrollementId(e.target.value)}
+
               />
             </div>
           </div>
@@ -316,5 +337,6 @@ const Page2 = ({
     </div>
   );
 };
+
 
 export default LawyerRegister;
