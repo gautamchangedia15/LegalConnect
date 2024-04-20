@@ -36,7 +36,22 @@ const addClient = async (req, res) => {
       password: hashedPassword,
       role: "Client",
     });
+
+    const docSnapshot = await docRef.get();
+
+    const token = jwt.sign(
+      { userId: docRef.id, email: docSnapshot.data().email },
+      process.env.JWT_SECRET_KEY,
+
+      { expiresIn: "10d" }
+    );
+
     res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
       .status(201)
       .json({ message: "Client added successfully", id: docRef.id });
   } catch (error) {
@@ -103,12 +118,10 @@ const currentClient = async (req, res) => {
 
     jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
       if (err) {
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: err.message || "JWT verification failed",
-          });
+        return res.status(500).json({
+          success: false,
+          error: err.message || "JWT verification failed",
+        });
       }
       console.log("Decode data: ",decoded);
       try {

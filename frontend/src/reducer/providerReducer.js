@@ -9,6 +9,9 @@ import {
   LOAD_PROVIDER_REQUEST,
   LOAD_PROVIDER_SUCCESS,
   LOAD_PROVIDER_FAIL,
+  REGISTER_PROVIDER_REQUEST,
+  REGISTER_PROVIDER_SUCCESS,
+  REGISTER_PROVIDER_FAIL,
 } from "../constants/providerConstant";
 
 // provider reducer
@@ -100,6 +103,40 @@ export const loadProviders = (
         Provider: action.payload,
       };
     case LOAD_PROVIDER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+// load Provider
+export const registerProviderReducer = (
+  state = { Provider: {}, loading: false },
+  action
+) => {
+  switch (action.type) {
+    case REGISTER_PROVIDER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        Provider: {},
+      };
+    case REGISTER_PROVIDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        Provider: action.payload,
+      };
+    case REGISTER_PROVIDER_FAIL:
       return {
         ...state,
         loading: false,

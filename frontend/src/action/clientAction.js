@@ -17,7 +17,7 @@ export const loadUser = () => async (dispatch) => {
       type: LOAD_CLIENT_REQUEST,
     });
     const { data } = await axios.get(
-      `${server}/api/client/current`,
+      `${server}/auth/client/currentClient`,
 
       { withCredentials: true }
     );
@@ -41,13 +41,13 @@ export const logoutClient = () => async (dispatch) => {
       type: LOGOUT_CLIENT_REQUEST,
     });
     const { data } = await axios.get(
-      `${server}/api/client/logout`,
+      `${server}/auth/client/logout`,
 
       { withCredentials: true }
     );
     dispatch({
       type: LOGOUT_CLIENT_SUCCESS,
-      payload: data.message,
+      payload: ("hello", data.message),
     });
   } catch (error) {
     dispatch({

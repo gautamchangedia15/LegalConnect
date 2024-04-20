@@ -78,10 +78,26 @@ const addProfile = async (req, res) => {
       verified: false,
       availability: [], //to further store time slots
     });
-    res.status(201).json({
-      message: "Provider data submitted for verification",
-      id: docRef.id,
-    });
+
+    console.log(docRef.id);
+    const token = jwt.sign(
+      { userId: docRef.id },
+      process.env.JWT_SECRET_KEY,
+
+      { expiresIn: "10d" }
+    );
+
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .status(201)
+      .json({
+        message: "Provider data submitted for verification",
+        id: docRef.id,
+      });
   } catch (error) {
     console.error("Error submitting provider:", error);
     res.status(500).json("Error submitting provider");
@@ -170,7 +186,7 @@ const currentProvider = async (req, res) => {
 
       try {
         // Retrieve the document from Firestore by ID
-        const docRef = db.collection("providers").doc(decoded.userId.userId);
+        const docRef = db.collection("providers").doc(decoded.user.userId);
         const docSnapshot = await docRef.get();
 
         if (!docSnapshot.exists) {
@@ -179,11 +195,10 @@ const currentProvider = async (req, res) => {
             .json({ success: false, error: "Client document not found" });
         }
         const providerData = docSnapshot.data();
-        // console.log(providerData);
         delete providerData.password;
         return res.status(200).json({ success: true, data: providerData });
       } catch (error) {
-        console.error("Error fetching document:", error);
+        console.error("Error fetching document:", error.message);
         return res
           .status(500)
           .json({ success: false, error: "Failed to fetch client document" });

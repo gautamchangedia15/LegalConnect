@@ -4,6 +4,7 @@ import { composeWithDevTools } from "@redux-devtools/extension";
 import {
   loadProviders,
   providerReducer,
+  registerProviderReducer,
   singleProviderReducer,
 } from "./reducer/providerReducer";
 import { loadClient, logoutClient } from "./reducer/clientsReducer";
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   auth: authReducer,
   logoutClient: logoutClient,
   loadProviders,
+  registerProvider: registerProviderReducer,
 });
 
 let initialState = {};

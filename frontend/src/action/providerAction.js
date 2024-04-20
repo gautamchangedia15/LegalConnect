@@ -10,6 +10,9 @@ import {
   LOAD_PROVIDER_REQUEST,
   LOAD_PROVIDER_SUCCESS,
   LOAD_PROVIDER_FAIL,
+  REGISTER_PROVIDER_REQUEST,
+  REGISTER_PROVIDER_SUCCESS,
+  REGISTER_PROVIDER_FAIL,
 } from "../constants/providerConstant";
 import { server } from "../store";
 
@@ -73,6 +76,30 @@ export const loadProvider = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOAD_PROVIDER_FAIL,
+      error: error.message,
+    });
+  }
+};
+
+// to register  provider
+
+export const registerProvider = (formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: REGISTER_PROVIDER_REQUEST,
+    });
+    const { data } = await axios.post(
+      `${server}/provider/addProfile/`,
+      { ...formData },
+      { withCredentials: true }
+    );
+    dispatch({
+      type: REGISTER_PROVIDER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: REGISTER_PROVIDER_FAIL,
       error: error.message,
     });
   }
