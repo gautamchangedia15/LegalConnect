@@ -1,28 +1,31 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { server} from '../../../../store';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { server } from "../../../../store";
 const ClientRegistration = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
-  
+  const Navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit =  async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Signing up:', { name, email, password });
-    try {
-      const response = await axios.post(`${server}/auth/client/register`, {
-        name,
-        email,
-        password,
-       
-      });
 
-      console.log('Response from server:', response.data);
+    try {
+      const response = await axios.post(
+        `${server}/auth/client/register`,
+
+        {
+          name,
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
+      Navigate("/");
+      window.location.reload();
     } catch (error) {
-      console.error('Error signing up:', error);
+      console.error("Error signing up:", error);
     }
   };
 
@@ -30,14 +33,10 @@ const ClientRegistration = () => {
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-lg px-10 pt-6 pb-8 mb-4 w-full max-w-md"
-      >
+        className="bg-white shadow-lg rounded-lg px-10 pt-6 pb-8 mb-4 w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Sign Up</h2>
         <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="name"
-          >
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
             Name
           </label>
           <input
@@ -50,10 +49,7 @@ const ClientRegistration = () => {
           />
         </div>
         <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="email"
-          >
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
             Email
           </label>
           <input
@@ -68,8 +64,7 @@ const ClientRegistration = () => {
         <div className="mb-6">
           <label
             className="block text-gray-700 font-bold mb-2"
-            htmlFor="password"
-          >
+            htmlFor="password">
             Password
           </label>
           <input
@@ -84,13 +79,11 @@ const ClientRegistration = () => {
         <div className="flex items-center justify-between">
           <button
             className="bg-green-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
+            type="submit">
             Sign Up
           </button>
-          <Link to={'/clientLogin'}>
-            <div className='text-sm text-gray-600'>
-
+          <Link to={"/clientLogin"}>
+            <div className="text-sm text-gray-600">
               Already have an account? <a href="/login">Log in</a>
             </div>
           </Link>
