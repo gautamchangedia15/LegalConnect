@@ -1,9 +1,9 @@
 // jwtConfig.js (or similar)
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config({ path: "./config/config.env" });
 const secret = process.env.JWT_SECRET_KEY;
-const expiration = "1h";
+const expiration = "10d";
 
 const generateAccessToken = (user) => {
   return jwt.sign({ user }, secret, { expiresIn: expiration });
@@ -27,4 +27,4 @@ const verifyAccessToken = (req, res, next) => {
   });
 };
 
-export {generateAccessToken,verifyAccessToken}
+export { generateAccessToken, verifyAccessToken };
