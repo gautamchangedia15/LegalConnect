@@ -1,20 +1,15 @@
 
 import express from "express";
-import {addSlot} from "../controllers/bookingController.js"
-import {verifyAccessToken} from "../config/jwtConfig.js"
-
-// const app=express()
-// const router = express.Router();
+import { addSlot,deleteSlot } from "../controllers/bookingController.js"
+import { verifyAccessToken } from "../config/jwtConfig.js";
 
 
-// //Check if the user is logged in or not
-// app.use(jwtConfig.js)
+const app = express();
+const router = express.Router();
 
-// router.route("/getAvailability").get(getAvailability);
-// module.exports=router;
+//route to add Slot
+router.route("/addSlot").post(verifyAccessToken, addSlot);
 
-//Check if the user is logged in or not
-app.use(verifyAccessToken)
-
-router.route("/addSlot/:id").post(addSlot);
+//route to delete a slot based upon the slot id
+router.route("/deleteSlot/:slotId").delete(verifyAccessToken, deleteSlot);
 export default router;

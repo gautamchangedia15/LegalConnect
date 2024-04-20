@@ -7,13 +7,12 @@ import providerAuth from "./routes/auth/providerAuth.js";
 import clientAuth from "./routes/auth/clientAuth.js";
 import clients from "./routes/client.js";
 import providers from "./routes/provider.js";
-// import booking from "./routes/booking.js"
-
+import booking from "./routes/booking.js";
 import cookieParser from "cookie-parser";
-import { clientLogout, currentClient } from "./controllers/clientController.js";
-// import { verifyToken } from './middleware/authMiddleware.js';
+
 const PORT = 3000;
 const app = express();
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -26,23 +25,6 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// // Register Client
-// app.post('/api/client/register', addClient);
-
-// // Login client
-// app.post('/api/client/login', clientLogin )
-
-// Logout Client
-app.get("/api/client/logout", clientLogout);
-
-// // current user
-app.get("/api/client/current", currentClient);
-// app.get('/api/client/profile', verifyToken, (req, res) => {
-// Access authenticated user's data from req.user
-// const { userId, email } = req.user;
-// res.json({ userId, email });
-// });
-
 //route for auth of provider
 app.use("/auth/provider", providerAuth);
 //route for auth of client
@@ -53,7 +35,7 @@ app.use("/client", clients);
 app.use("/provider", providers);
 
 //route for booking
-// app.use("/booking",booking)
+app.use("/booking", booking);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
