@@ -1,7 +1,7 @@
 import admin from "../firebase.js";
 import bcrypt from "bcrypt";
 import { generateAccessToken, verifyAccessToken } from "../config/jwtConfig.js";
-
+import jwt from "jsonwebtoken";
 const db = admin.firestore();
 const providerCollection = db.collection("providers");
 const getAll = async (req, res) => {
@@ -49,6 +49,7 @@ const addProfile = async (req, res) => {
     const {
       name,
       email,
+      role = "Provider",
       password,
       domain,
       expertise_area,
@@ -69,7 +70,7 @@ const addProfile = async (req, res) => {
 
       domain,
 
-      role: "provider",
+      role: "Provider",
       expertise_area,
       city,
       education,
@@ -131,13 +132,11 @@ const providerLogin = async (req, res) => {
         res
           .status(200)
           .json({ message: "Provider logged in successfully", neww });
-        console.log(token);
       } else {
         res.status(401).json({ error: "Invalid password" });
       }
     }
   } catch (error) {
-    console.error("Error logging in provider:", error);
     res
       .status(500)
       .json({ success: false, error: "Failed to log in provider" });
@@ -154,4 +153,55 @@ const providerLogout = async (req, res) => {
   }
 };
 
-export { getAll, addProfile, getProfile, providerLogin, providerLogout };
+const currentProvider = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res
+        .status(401)
+        .json({ success: false, error: "Token not provided" });
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ success: false, error: "JWT verification failed" });
+      }
+
+      try {
+        // Retrieve the document from Firestore by ID
+        const docRef = db.collection("providers").doc(decoded.userId.userId);
+        const docSnapshot = await docRef.get();
+
+        if (!docSnapshot.exists) {
+          return res
+            .status(404)
+            .json({ success: false, error: "Client document not found" });
+        }
+        const providerData = docSnapshot.data();
+        // console.log(providerData);
+        delete providerData.password;
+        return res.status(200).json({ success: true, data: providerData });
+      } catch (error) {
+        console.error("Error fetching document:", error);
+        return res
+          .status(500)
+          .json({ success: false, error: "Failed to fetch client document" });
+      }
+    });
+  } catch (error) {
+    // console.error("Error processing request:", error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export {
+  getAll,
+  addProfile,
+  getProfile,
+  providerLogin,
+  providerLogout,
+  currentProvider,
+};

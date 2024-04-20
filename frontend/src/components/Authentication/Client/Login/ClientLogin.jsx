@@ -23,7 +23,7 @@ const ClientLogin = () => {
       window.location.reload();
       console.log("Response from server:", response.data);
     } catch (error) {
-      console.error("Error signing:", error);
+      console.error("Error signing:", error.message);
     }
     // Add your login logic here
     console.log("Logging in:", { email, password });

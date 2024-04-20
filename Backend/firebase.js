@@ -1,17 +1,17 @@
-import admin from 'firebase-admin';
+import admin from "firebase-admin";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const serviceAccount = require('./serviceAccountKey.json');
+const serviceAccount = require("./serviceAccountKey.json");
 
 console.log("Connection Initialised.....");
-try{
+try {
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert(serviceAccount),
   });
   console.log("Connected firebase Successfully!");
-}catch(error){
-  console.log("Error connecting to firebase: ",error);
+} catch (error) {
+  console.log("Error connecting to firebase: ", error);
 }
 
 export default admin;

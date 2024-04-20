@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProvider } from "../../action/providerAction";
 import { logoutClient } from "../../action/clientAction";
 function NavigationBar() {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, role } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [search, setsearch] = useState("");
   const Navigate = useNavigate();
@@ -17,7 +17,10 @@ function NavigationBar() {
   };
 
   return (
-    <div className="flex justify-between fixed top-0 left-0 right-0 h-16 bg-white shadow-sm z-10 px-4 py-2 items-center Px-10">
+    <div
+      className={`flex justify-between fixed top-0 left-0 right-0 h-16 ${
+        role == "Provider" ? "bg-green-800" : "bg-white"
+      } shadow-sm z-10 px-4 py-2 items-center Px-10`}>
       <div className="flex justify-between gap-12 ">
         <Link to={"/"}>
           {" "}
@@ -52,7 +55,21 @@ function NavigationBar() {
               <Link to={"/service"}>
                 <li>Find a service</li>
               </Link>
+              {role == "Provider" ? (
+                <Link to={"/provider/dashboard"}>
+                  <li>Dashboard</li>
+                </Link>
+              ) : (
+                <></>
+              )}
 
+              {role == "Client" ? (
+                <Link to={"/client/myservices"}>
+                  <li>My services</li>
+                </Link>
+              ) : (
+                <></>
+              )}
               <li>About</li>
               <li>Contact</li>
               {isAuthenticated && isAuthenticated ? (
