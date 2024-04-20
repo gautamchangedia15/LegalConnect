@@ -3,10 +3,12 @@ import {
   addClient,
   clientLogin,
   clientLogout,
+  currentClient
 } from "../../controllers/clientController.js";
 
 const router = express.Router();
 
+//register new login
 router.route("/register").post(addClient);
 
 //logging provider
@@ -16,6 +18,6 @@ router.route("/login").post(clientLogin);
 router.route("/logout").post(clientLogout);
 
 //provider logout
-router.route("/currentClient").get(clientLogout);
+router.route("/currentClient").get(currentClient);
 
 export default router;

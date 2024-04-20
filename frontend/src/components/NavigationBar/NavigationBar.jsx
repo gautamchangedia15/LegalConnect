@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProvider } from "../../action/providerAction";
+import { logoutClient } from "../../action/clientAction";
 function NavigationBar() {
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [search, setsearch] = useState("");
+  const Navigate = useNavigate();
   const inputHandler = (e) => {
     setsearch(e.target.value);
     dispatch(getProvider("", "", search));
@@ -13,7 +16,6 @@ function NavigationBar() {
     }
   };
 
-  const Navigate = useNavigate();
   return (
     <div className="flex justify-between fixed top-0 left-0 right-0 h-16 bg-white shadow-sm z-10 px-4 py-2 items-center Px-10">
       <div className="flex justify-between gap-12 ">
@@ -21,7 +23,6 @@ function NavigationBar() {
           {" "}
           <div>Logo</div>
         </Link>
-        <div>Appointment</div>
       </div>
       <div className="flex justify-between gap-4 items-center ">
         <div>
@@ -54,6 +55,22 @@ function NavigationBar() {
 
               <li>About</li>
               <li>Contact</li>
+              {isAuthenticated && isAuthenticated ? (
+                <button
+                  onClick={() => {
+                    dispatch(logoutClient());
+                    Navigate("/");
+                    window.location.reload();
+                  }}>
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <Link to={"/clientLogin"}>
+                    <li>Login</li>
+                  </Link>
+                </>
+              )}
             </ul>
           </nav>
         </div>
