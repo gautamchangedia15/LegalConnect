@@ -12,7 +12,6 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ClientLogin from "./components/Authentication/Client/Login/ClientLogin";
 import ClientRegistration from "./components/Authentication/Client/Register/ClientRegistration";
 import LawyerRegister from "./components/Authentication/Lawyer/Register/LawyerRegister";
-import AdditionalDetailsPage from "./components/Authentication/Lawyer/Register/AdditionalDetailsPage";
 import LawyerLogin from "./components/Authentication/Lawyer/Login/LawyerLogin";
 
 import AppointmentBooking from "./components/AppointmentBooking/AppointmentBooking";
@@ -82,11 +81,7 @@ export default function App() {
             element={<ClientRegistration />}
           />
           {/* Lawyer */}
-          <Route
-            exact
-            path="/additional-details"
-            element={<AdditionalDetailsPage />}
-          />
+
           <Route exact path="/lawyerLogin" element={<LawyerLogin />} />
           <Route
             exact
@@ -112,7 +107,7 @@ export default function App() {
         </Routes>
         {/* dashboard */}
 
-        {role && role == "Provider" ? (
+        {true ? (
           <Routes>
             <Route
               exact
@@ -143,6 +138,7 @@ export default function App() {
         ) : (
           <></>
         )}
+        {/* <Dashboard/> */}
       </Router>
 
       <Footer />

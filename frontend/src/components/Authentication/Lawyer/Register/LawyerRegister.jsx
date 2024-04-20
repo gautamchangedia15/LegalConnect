@@ -1,43 +1,97 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import ProfilePhotoInput from './ProfilePhotoInput';
 
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData({ ...formData, [name]: value });
-};
-const handleNext = () => {
-  setPage(2);
-};
+function LawyerRegister() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [expertiseArea, setExpertiseArea] = useState('');
+  const [city, setCity] = useState('');
+  const [education, setEducation] = useState('');
+  const [about, setAbout] = useState('');
+  const [propExp, setPropExp] = useState('');
+  const [enrollmentId, setEnrollmentId] = useState('');
+  const [page, setPage] = useState(1);
 
-const handlePrev = () => {
-  setPage(1);
-};
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  // Prepare registration data to send to backend
-  const registrationData = {
-    ...formData,
-    email: localStorage.getItem('email'),
-    password: localStorage.getItem('password'),
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Prepare registration data to send to backend
+    const registrationData = {
+      email,
+      password,
+      name,
+      expertiseArea,
+      city,
+      education,
+      about,
+      propExp,
+      enrollmentId,
+    };
+
+    // Send registration data to backend
+    console.log(registrationData);
   };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    //
+
+    setPage(2);
+  };
+
+  const handlePrev = (e) => {
+    e.preventDefault();
+    //
+
+    setPage(1);
+  };
+
+  return (
+    <div>
+      <div className="container page-container">
+        <div className={`page ${page === 1 ? '' : 'hidden'}`}>
+          <Page1
+            onNext={handleNext}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+          />
+        </div>
+        <div className={`page ${page === 2 ? '' : 'hidden'}`}>
+          <Page2
+            onPrev={handlePrev}
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+            expertiseArea={expertiseArea}
+            setExpertiseArea={setExpertiseArea}
+            city={city}
+            setCity={setCity}
+            education={education}
+            setEducation={setEducation}
+            about={about}
+            setAbout={setAbout}
+            propExp={propExp}
+            setPropExp={setPropExp}
+            enrollmentId={enrollmentId}
+            setEnrollmentId={setEnrollmentId}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
 
-const Page1 = ({ onNext }) => {
+const Page1 = ({ onNext, email, setEmail, password, setPassword }) => {
   return (
     <div className=" page-1 min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="bg-white max-w-md w-full rounded-lg shadow-md overflow-hidden p-8">
         <h2 className="text-3xl font-extrabold text-gray-900 text-center py-6">Create your Lawyer account</h2>
-        <form onSubmit={handleSubmit} className="px-8 py-6 space-y-6">
+        <form className="px-8 py-6 space-y-6 " noValidate>
           <div className=' justify-between gap-12 text-center'>
-          {/* <div className='bg-indigo-50 rounded-lg w-2/6 p-4 '>
-              <img src="https://cdn-icons-png.freepik.com/512/147/147142.png" alt="" />
-              <label htmlFor="">Add image</label>
-              <input  className='text-sm flex' type="file" src="" alt="" />
-            </div> */}
             <div>
-
               <div>
                 <label htmlFor="email" className="block text-md font-medium text-gray-700">
                   Email address
@@ -49,7 +103,8 @@ const Page1 = ({ onNext }) => {
                   required
                   className="input-field border border-gray-300 rounded-sm w-full p-1"
                   placeholder="Enter your email"
-                  onChange={handleChange}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
@@ -63,36 +118,51 @@ const Page1 = ({ onNext }) => {
                   required
                   className="input-field border border-gray-300 rounded-sm w-full p-1"
                   placeholder="Enter your password"
-                  onChange={handleChange}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="flex justify-center">
-                {/* <Link to={'/Additional-details'}> */}
                 <button onClick={onNext} className="next-button bg-indigo-500 w-full text-white p-2 rounded-md mt-4">
                   Next
                 </button>
-                {/* </Link> */}
               </div>
             </div>
           </div>
-
         </form>
       </div>
     </div>
   );
 };
-const Page2 = ({ onPrev }) => {
+
+const Page2 = ({
+  onPrev,
+  handleSubmit,
+  name,
+  setName,
+  expertiseArea,
+  setExpertiseArea,
+  city,
+  setCity,
+  education,
+  setEducation,
+  about,
+  setAbout,
+  propExp,
+  setPropExp,
+  enrollmentId,
+  setEnrollmentId,
+}) => {
   return (
     <div className=" page-2 min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Additional Details</h2>
         </div>
-        <form className=" mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div className='justify-center flex  w-full 
-             gap-12 text-center'>
-            <ProfilePhotoInput/>
-            </div>
+        <form className=" mt-8 space-y-6" onSubmit={handleSubmit} noValidate>
+          <div className='justify-center flex  w-full gap-12 text-center'>
+            <ProfilePhotoInput />
+          </div>
           <div className="additional-details rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -105,7 +175,8 @@ const Page2 = ({ onPrev }) => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Enter your full name"
-                onChange={handleChange}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div>
@@ -119,7 +190,8 @@ const Page2 = ({ onPrev }) => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Enter your expertise area"
-                onChange={handleChange}
+                value={expertiseArea}
+                onChange={(e) => setExpertiseArea(e.target.value)}
               />
             </div>
             <div>
@@ -133,7 +205,8 @@ const Page2 = ({ onPrev }) => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Enter your city"
-                onChange={handleChange}
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
               />
             </div>
             <div>
@@ -147,7 +220,8 @@ const Page2 = ({ onPrev }) => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Enter your education"
-                onChange={handleChange}
+                value={education}
+                onChange={(e) => setEducation(e.target.value)}
               />
             </div>
             <div>
@@ -161,7 +235,8 @@ const Page2 = ({ onPrev }) => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Enter your about information"
-                onChange={handleChange}
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
               />
             </div>
             <div>
@@ -175,7 +250,8 @@ const Page2 = ({ onPrev }) => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Enter your experience"
-                onChange={handleChange}
+                value={propExp}
+                onChange={(e) => setPropExp(e.target.value)}
               />
             </div>
             <div>
@@ -189,7 +265,8 @@ const Page2 = ({ onPrev }) => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Enter your enrollment ID"
-                onChange={handleChange}
+                value={enrollmentId}
+                onChange={(e) => setEnrollmentId(e.target.value)}
               />
             </div>
           </div>
@@ -211,29 +288,5 @@ const Page2 = ({ onPrev }) => {
     </div>
   );
 };
-function LawyerRegister() {
-  const [page, setPage] = useState(1);
-  const handleNext = () => {
-    setPage(2);
-  };
 
-  const handlePrev = () => {
-    setPage(1);
-  };
-  return (
-    <div>
-
-      <div className="container page-container">
-
-        <div className={`page ${page === 1 ? '' : 'hidden'}`}>
-          <Page1 onNext={handleNext} />
-        </div>
-        <div className={`page ${page === 2 ? '' : 'hidden'}`}>
-          <Page2 onPrev={handlePrev} />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export default LawyerRegister
+export default LawyerRegister;
