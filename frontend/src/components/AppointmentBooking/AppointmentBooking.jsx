@@ -45,6 +45,7 @@ const AppointmentBooking = () => {
     return date;
   });
 
+
   return (
     <div className=" flex flex-col items-center space-y-4">
       <h2 className="text-lg font-semibold mb-4">Select Date</h2>
@@ -77,6 +78,7 @@ const AppointmentBooking = () => {
               }`}
               onClick={() => handleTimeSelect(slot.start)}>
               {`${slot.start} - ${slot.end}`}
+
             </button>
           ))}
         </div>
