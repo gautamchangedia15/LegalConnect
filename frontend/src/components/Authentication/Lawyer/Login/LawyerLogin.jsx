@@ -12,7 +12,6 @@ const LawyerLogin = (history) => {
     e.preventDefault();
 
     try {
-      console.log(email, password);
       const response = await axios.post(
         `${server}/auth/provider/login`,
         {
@@ -23,7 +22,6 @@ const LawyerLogin = (history) => {
       );
       navigate("/");
       window.location.reload();
-      console.log("Response from server:", response.data);
     } catch (error) {
       console.error("Login error:", error);
     }

@@ -3,7 +3,7 @@ import {
   addClient,
   clientLogin,
   clientLogout,
-  currentClient
+  currentClient,
 } from "../../controllers/clientController.js";
 
 const router = express.Router();
@@ -15,7 +15,7 @@ router.route("/register").post(addClient);
 router.route("/login").post(clientLogin);
 
 //provider logout
-router.route("/logout").post(clientLogout);
+router.route("/logout").get(clientLogout);
 
 //provider logout
 router.route("/currentClient").get(currentClient);

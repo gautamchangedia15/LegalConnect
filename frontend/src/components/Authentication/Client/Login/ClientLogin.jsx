@@ -11,6 +11,7 @@ const ClientLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(email, password);
       const response = await axios.post(
         `${server}/auth/client/login`,
         {
@@ -32,7 +33,7 @@ const ClientLogin = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleSubmit(e)}
         className="bg-white shadow-lg rounded-lg px-10 pt-6 pb-8 mb-4 w-full max-w-md">
         <div className="flex justify-between text-center ">
           <h2 className="text-2xl font-bold mb-6 text-gray-800">Log In</h2>

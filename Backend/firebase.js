@@ -11,7 +11,7 @@ try {
   });
   console.log("Connected firebase Successfully!");
 } catch (error) {
-  console.log("Error connecting to firebase: ", error);
+  console.log("Error connecting to firebase: ", error.message || error);
 }
 
 export default admin;

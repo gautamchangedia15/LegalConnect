@@ -172,7 +172,7 @@ const currentProvider = async (req, res) => {
 
       try {
         // Retrieve the document from Firestore by ID
-        const docRef = db.collection("providers").doc(decoded.userId.userId);
+        const docRef = db.collection("providers").doc(decoded.user.userId);
         const docSnapshot = await docRef.get();
 
         if (!docSnapshot.exists) {
@@ -181,11 +181,10 @@ const currentProvider = async (req, res) => {
             .json({ success: false, error: "Client document not found" });
         }
         const providerData = docSnapshot.data();
-        // console.log(providerData);
         delete providerData.password;
         return res.status(200).json({ success: true, data: providerData });
       } catch (error) {
-        console.error("Error fetching document:", error);
+        console.error("Error fetching document:", error.message);
         return res
           .status(500)
           .json({ success: false, error: "Failed to fetch client document" });
