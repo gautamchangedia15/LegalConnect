@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { thunk } from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import {
+  loadProviders,
   providerReducer,
   singleProviderReducer,
 } from "./reducer/providerReducer";
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   user: loadClient,
   auth: authReducer,
   logoutClient: logoutClient,
+  loadProviders,
 });
 
 let initialState = {};

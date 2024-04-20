@@ -1,2 +1,5 @@
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";
+
+export const SET_ROLE_PROVIDER = "SET_ROLE_PROVIDER";
+export const SET_ROLE_CLIENT = "SET_ROLE_CLIENT";

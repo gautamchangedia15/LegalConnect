@@ -22,7 +22,7 @@ const LawyerLogin = (history) => {
         { withCredentials: true }
       );
       navigate("/");
-      //   window.location.reload();
+      window.location.reload();
       console.log("Response from server:", response.data);
     } catch (error) {
       console.error("Login error:", error);

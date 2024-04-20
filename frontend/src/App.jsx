@@ -19,26 +19,50 @@ import AppointmentBooking from "./components/AppointmentBooking/AppointmentBooki
 
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./action/clientAction";
-import { authenticate, logout } from "./action/authAction";
+import {
+  authenticate,
+  logout,
+  setRoleClient,
+  setRoleProvider,
+} from "./action/authAction";
+import { loadProvider } from "./action/providerAction";
+import Dashboard from "./components/lspDashboard/Dashboard";
+import UpcommingSlots from "./components/lspDashboard/Features/UpcommingSlots";
+import Pastbooking from "./components/lspDashboard/Features/Pastbooking";
+import Createbooking from "./components/lspDashboard/Features/Createbooking";
+import AllClients from "./components/lspDashboard/Features/AllClients";
+import Payment from "./components/lspDashboard/Features/Payment";
 export default function App() {
   const dispatch = useDispatch();
   const { client } = useSelector((state) => state.user);
-  const [auth, setAuth] = useState(false);
+  const { Provider } = useSelector((state) => state.loadProviders);
+  const { isAuthenticated, role } = useSelector((state) => state.auth);
+
   useEffect(() => {
     dispatch(loadUser());
+    dispatch(loadProvider());
   }, []);
 
   useEffect(() => {
     if (client.success) {
       dispatch(authenticate());
+      if (client.data.role && client.data.role == "Client") {
+        dispatch(setRoleClient());
+      }
     } else {
       dispatch(logout());
     }
-  }, [client]);
+
+    if (Provider.success) {
+      dispatch(authenticate());
+      if (Provider.data.role && Provider.data.role == "Provider") {
+        dispatch(setRoleProvider());
+      }
+    }
+  }, [client, Provider]);
 
   return (
     <>
-
       <Router>
         <NavigationBar />
         <Routes>
@@ -69,13 +93,57 @@ export default function App() {
             path="/lawyerRegistration"
             element={<LawyerRegister />}
           />
-                {/* Booking */}
-        <Route exact path="/service/providerprofile/appointment/:id" element= {<AppointmentBooking/>}/>
-        
-        </Routes>
-        {/* <LawyerRegister /> */}
-      </Router>
+          {/* Booking */}
+          {isAuthenticated && isAuthenticated ? (
+            <Route
+              exact
+              path="/service/providerprofile/appointment/:id"
+              element={<AppointmentBooking />}
+            />
+          ) : (
+            <></>
+          )}
 
+          {role && role == "Provider" ? (
+            <Route exact path="/provider/dashboard" element={<Dashboard />} />
+          ) : (
+            <Route exact path="/provider/dashboard" element={<LawyerLogin />} />
+          )}
+        </Routes>
+        {/* dashboard */}
+
+        {role && role == "Provider" ? (
+          <Routes>
+            <Route
+              exact
+              path="/provider/dashboard/upcomingslots"
+              element={<UpcommingSlots />}
+            />
+            <Route
+              exact
+              path="/provider/dashboard/pastbooking"
+              element={<Pastbooking />}
+            />
+            <Route
+              exact
+              path="/provider/dashboard/createbooking"
+              element={<Createbooking />}
+            />
+            <Route
+              exact
+              path="/provider/dashboard/clients"
+              element={<AllClients />}
+            />
+            <Route
+              exact
+              path="/provider/dashboard/payments"
+              element={<Payment />}
+            />
+          </Routes>
+        ) : (
+          <></>
+        )}
+      </Router>
 
       <Footer />
     </>

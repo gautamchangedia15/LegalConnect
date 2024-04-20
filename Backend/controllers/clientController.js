@@ -34,7 +34,7 @@ const addClient = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role: "client",
+      role: "Client",
     });
     res
       .status(201)
@@ -106,10 +106,12 @@ const currentClient = async (req, res) => {
 
     jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
       if (err) {
-        console.error("JWT verification failed:", err.message);
         return res
           .status(500)
-          .json({ success: false, error: "JWT verification failed" });
+          .json({
+            success: false,
+            error: err.message || "JWT verification failed",
+          });
       }
 
       try {
@@ -127,17 +129,17 @@ const currentClient = async (req, res) => {
         delete clientData.password;
         return res.status(200).json({ success: true, data: clientData });
       } catch (error) {
-        console.error("Error fetching document:", error);
-        return res
-          .status(500)
-          .json({ success: false, error: "Failed to fetch client document" });
+        return res.status(500).json({
+          success: false,
+          error: error.message || "Failed to fetch client document",
+        });
       }
     });
   } catch (error) {
-    console.error("Error processing request:", error);
-    return res
-      .status(500)
-      .json({ success: false, error: "Internal server error" });
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Internal server error",
+    });
   }
 };
 
