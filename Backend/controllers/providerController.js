@@ -80,10 +80,26 @@ const addProfile = async (req, res) => {
       verified: false,
       availability: [], //to further store time slots
     });
-    res.status(201).json({
-      message: "Provider data submitted for verification",
-      id: docRef.id,
-    });
+
+    console.log(docRef.id);
+    const token = jwt.sign(
+      { userId: docRef.id },
+      process.env.JWT_SECRET_KEY,
+
+      { expiresIn: "10d" }
+    );
+
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .status(201)
+      .json({
+        message: "Provider data submitted for verification",
+        id: docRef.id,
+      });
   } catch (error) {
     console.error("Error submitting provider:", error);
     res.status(500).json("Error submitting provider");
