@@ -6,12 +6,19 @@ import { server } from "../../../../store";
 const ClientLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate form fields
+    if (!email || !password) {
+      setError("Please fill in both email and password.");
+      return;
+    }
+
     try {
-      console.log(email, password);
       const response = await axios.post(
         `${server}/auth/client/login`,
         {
@@ -20,29 +27,39 @@ const ClientLogin = () => {
         },
         { withCredentials: true }
       );
+
+      // Clear any previous error
+      setError("");
+
+      // Redirect to home page upon successful login
       navigate("/");
-      window.location.reload();
+      window.location.reload(); // Force reload to update user session
       console.log("Response from server:", response.data);
     } catch (error) {
-      console.error("Error signing:", error.message);
+      if (error.response && error.response.status === 401) {
+        setError("Invalid email or password. Please try again.");
+      } else {
+        setError("An unexpected error occurred. Please try again later.");
+      }
+      console.error("Error signing in:", error.message);
     }
-    // Add your login logic here
-    console.log("Logging in:", { email, password });
   };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="bg-white shadow-lg rounded-lg px-10 pt-6 pb-8 mb-4 w-full max-w-md">
-        <div className="flex justify-between text-center ">
+        className="bg-white shadow-lg rounded-lg px-10 pt-6 pb-8 mb-4 w-full max-w-md"
+      >
+        <div className="flex justify-between text-center">
           <h2 className="text-2xl font-bold mb-6 text-gray-800">Log In</h2>
           <Link to={"/lawyerLogin"}>
-            <p className="  h-full p-1 rounded-md underline text-gray-700">
+            <p className="h-full p-1 rounded-md underline text-gray-700">
               as Lawyer
             </p>
           </Link>
         </div>
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
             Email
@@ -59,7 +76,8 @@ const ClientLogin = () => {
         <div className="mb-6">
           <label
             className="block text-gray-700 font-bold mb-2"
-            htmlFor="password">
+            htmlFor="password"
+          >
             Password
           </label>
           <input
@@ -74,19 +92,22 @@ const ClientLogin = () => {
         <div className="flex items-center justify-between">
           <button
             className="bg-green-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit">
+            type="submit"
+          >
             Log In
           </button>
           <div className="flex flex-col">
             <a
-              className="inline-block align-baseline  text-sm text-blue-500 hover:text-blue-800 mb-2"
-              href="#">
+              className="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800 mb-2"
+              href="#"
+            >
               Forgot Password?
             </a>
             <Link to="/clientRegistration">
               <a
-                className="inline-block align-baseline  text-sm text-gray-700 hover:text-blue-800"
-                href="#">
+                className="inline-block align-baseline text-sm text-gray-700 hover:text-blue-800"
+                href="#"
+              >
                 Don't have an account? Sign up now!
               </a>
             </Link>
