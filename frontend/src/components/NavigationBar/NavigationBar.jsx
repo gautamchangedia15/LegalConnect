@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { IoSearch } from "react-icons/io5";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProvider } from "../../action/providerAction";
@@ -19,12 +20,20 @@ function NavigationBar() {
   return (
     <div
       className={`flex justify-between fixed top-0 left-0 right-0 h-16 ${
-        role == "Provider" ? "bg-green-800" : "bg-white"
+        role == "Provider" ? "bg-gray-50" : "bg-white"
       } shadow-sm z-10 px-4 py-2 items-center Px-10`}>
       <div className="flex justify-between gap-12 ">
         <Link to={"/"}>
           {" "}
-          <div>Logo</div>
+          <div className="text-2xl font-bold ">
+            <span className="text-indigo-500">
+            Legal
+            </span>
+            <span className="text-green-800">
+              
+             Connect
+            </span>
+             </div>
         </Link>
       </div>
       <div className="flex justify-between gap-4 items-center ">
@@ -41,8 +50,8 @@ function NavigationBar() {
             onClick={() =>
               dispatch(getProvider("", "", search)) && Navigate("/service")
             }
-            className="bg-blue-500 text-white px-4 py-2 rounded-md">
-            Search
+            className="bg-gray-800 border border-gray-300 h-10 text-white font-bold text-xl text- px-4 py-2 rounded-md">
+            <IoSearch/>
           </button>
         </div>
       </div>

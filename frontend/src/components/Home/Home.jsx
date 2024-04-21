@@ -12,11 +12,11 @@ function Home() {
     <div>
         {/* <NavigationBar/> */}
         <HeadCarouser/>
-        <LspFinder/>
+        {/* <LspFinder/> */}
         <BenifitCards/>
         <ServiceProvided/>
         <hr className='my-10'/>
-        <LawyerFinder/>
+        {/* <LawyerFinder/> */}
         <Testimonials/>
     </div>
   )
