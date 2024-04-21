@@ -77,6 +77,8 @@ const addProfile = async (req, res) => {
       enrollementId,
       verified: false,
       availability: [], //to further store time slots
+      razorpayAccount: {},
+      accountStatus: "initial",
     });
 
     console.log(docRef.id);
