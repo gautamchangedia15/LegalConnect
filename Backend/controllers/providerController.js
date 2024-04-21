@@ -198,7 +198,12 @@ const currentProvider = async (req, res) => {
         }
         const providerData = docSnapshot.data();
         delete providerData.password;
-        return res.status(200).json({ success: true, data: providerData });
+        return res
+          .status(200)
+          .json({
+            success: true,
+            data: { id: decoded.user.userId, ...providerData },
+          });
       } catch (error) {
         console.error("Error fetching document:", error.message);
         return res
