@@ -5,13 +5,14 @@ import dotenv from "dotenv";
 dotenv.config({ path: "./config/config.env" });
 import providerAuth from "./routes/auth/providerAuth.js";
 import clientAuth from "./routes/auth/clientAuth.js";
+import messagesRoutes from "./routes/messagesRoutes.js";
 import clients from "./routes/client.js";
 import providers from "./routes/provider.js";
 import booking from "./routes/booking.js";
 import cookieParser from "cookie-parser";
 
 const PORT = 3000;
-const app = express();
+import { app, server } from "./socket/socket.js";
 
 app.use(express.json());
 app.use(cookieParser());
@@ -37,6 +38,9 @@ app.use("/provider", providers);
 //route for booking
 app.use("/booking", booking);
 
-app.listen(PORT, () => {
+//for chat application
+app.use("/messages",messagesRoutes);
+
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
