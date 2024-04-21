@@ -61,7 +61,6 @@ const addClient = async (req, res) => {
 };
 
 const clientLogin = async (req, res) => {
-  console.log(req.body);
   try {
     const { email, password } = req.body;
 
@@ -73,10 +72,14 @@ const clientLogin = async (req, res) => {
       res.status(404).json({ error: "Client not found" });
     } else {
       const client = clientRef.docs[0].data();
-      console.log("Client: ",client);
       const isMatch = await bcrypt.compare(password, client.password);
       if (isMatch) {
-        const token = verifyAccessToken({ userId: clientRef.docs[0].id, email: client.email });
+        const token = jwt.sign(
+          { userId: clientRef.docs[0].id, email: client.email },
+          process.env.JWT_SECRET_KEY,
+
+          { expiresIn: "10d" }
+        );
         res.cookie("token", token, {
           httpOnly: true,
           secure: true,
@@ -123,7 +126,7 @@ const currentClient = async (req, res) => {
           error: err.message || "JWT verification failed",
         });
       }
-      console.log("Decode data: ",decoded);
+
       try {
         // Retrieve the document from Firestore by ID
         const docRef = db.collection("clients").doc(decoded.userId);
