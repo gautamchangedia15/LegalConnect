@@ -133,6 +133,11 @@ const addProfile = async (req, res) => {
       { expiresIn: "10d" }
     );
 
+    const collectionRef = db.collection("providers").doc(docRef.id);
+    await collectionRef.update({
+      razorpayAccount: response.data,
+      accountStatus: "account linked",
+    });
     return res
       .cookie("token", token, {
         httpOnly: true,
