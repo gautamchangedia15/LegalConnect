@@ -8,8 +8,8 @@ const UpcommingSlots = () => {
       <SideDashboard />
       <div className="mt-20">
         <h1 className="text-2xl font-bold text-center">Upcomming Slots</h1>
-        
-        <Slots/>
+
+        <Slots value={true} />
       </div>
     </div>
   );

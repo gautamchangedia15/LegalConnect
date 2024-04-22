@@ -8,28 +8,27 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 
-export function BenifitCard() {
+export function BenifitCard(props) {
   return (
-    <Card className="max-w-[16rem] overflow-hidden">
+    <Card className="max-w-[16rem] overflow-hidden h-full mb-10">
       <CardHeader
         floated={false}
         shadow={false}
         color="transparent"
-        className="m-0 rounded-none"
+        className="m-0 rounded-none h-48 w-full"
       >
-        <img
-          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+        <img className="ml-10"
+          src={props.image}
           alt="ui/ux review check"
         />
       </CardHeader>
-      <CardBody>
+      <CardBody className="w-full h-48">
         
-        <Typography variant="h4" color="blue-gray">
-          UI/UX Review Check
+        <Typography variant="h5" color="blue-gray">
+          {props.title}
         </Typography>
-        <Typography variant="lead" color="gray" className="mt-3 font-normal">
-          Because it&apos;s about motivating the doers. Because I&apos;m here to
-          follow my dreams and inspire others.
+        <Typography variant="small" color="gray" className="mt-3 font-normal">
+          {props.description}
         </Typography>
       </CardBody>
       <CardFooter className="flex items-center justify-between">

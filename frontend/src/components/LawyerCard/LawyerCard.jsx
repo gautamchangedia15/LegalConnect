@@ -32,18 +32,19 @@ const LawyerCard = () => {
                     />
                   </div>
                   <div className="flex-1 flex-col justify-between p-4 gap-2 space-y-1 md:space-y-0 md:gap-0">
-                    <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    <h2 className="text-xl  font-bold text-gray-900 mb-2">
                       {lawyer.name}
                     </h2>
-                    <p className="text-gray-700 mb-2">Criminal Lawyer</p>
-                    <p className="text-gray-600 mb-2">
+                    <p className="text-gray-700 mb-2  font-bold">Criminal Lawyer</p>
+                    <p className="text-gray-600 mb-2 font-bold ">
                       10+ years of experience
                     </p>
-                    <p className="text-gray-600 mb-4">Kolkata, West Bengal</p>
+                    <p className="text-gray-600 mb-4 ">Kolkata, West Bengal</p>
                     <div className="flex items-center mb-4">
                       <RatingStar rating={4} totalStars={5} />
                     </div>
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md">
+                    
+                    <button className="bg-green-700 hover:bg-green-600 text-white font-bold text-sm  py-2 px-4 rounded-md">
                       Book Appointment
                     </button>
                   </div>
