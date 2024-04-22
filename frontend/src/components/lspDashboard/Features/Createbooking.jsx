@@ -62,11 +62,11 @@ export default function Createbooking() {
     <div className="flex ">
       <SideDashboard />
       <div className="flex gap-20 justify-around mt-48">
-        <Card className="w-96 h-96 ml-20 ">
+        <Card className="w-96 h-auto ml-20 ">
           <CardHeader
             variant="gradient"
             color="indigo"
-            className="mb-4 grid h-24 place-items-center">
+            className="mb-4 grid h-20  place-items-center">
             <Typography variant="h3" color="">
               Create Slot
             </Typography>
@@ -122,11 +122,11 @@ export default function Createbooking() {
             </Typography>
           </CardHeader>
           <CardBody>
-            <List>
+            <List className="h-60 overflow-y-auto">
               {availability && availability ? (
                 availability.map((item) => (
                   <>
-                    <ListItem ripple={false} className="py-1 pr-1 pl-4 ">
+                    <ListItem ripple={false} className="py-1 pr-1 pl-4">
                       <div className="flex gap-3">
                         <div>Date: {item.date}</div>
                         <div>{item.startTime}</div>
