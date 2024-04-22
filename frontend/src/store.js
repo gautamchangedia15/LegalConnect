@@ -9,6 +9,8 @@ import {
 } from "./reducer/providerReducer";
 import { loadClient, logoutClient } from "./reducer/clientsReducer";
 import { authReducer } from "./reducer/authReducer";
+import { createAppointmentReducer } from "./reducer/appointmenReducer";
+import { paymentConfirmationReducer } from "./reducer/paymentReducer";
 
 const reducer = combineReducers({
   provider: providerReducer,
@@ -18,6 +20,8 @@ const reducer = combineReducers({
   logoutClient: logoutClient,
   loadProviders,
   registerProvider: registerProviderReducer,
+  createAppointments: createAppointmentReducer,
+  paymentConfirmation: paymentConfirmationReducer,
 });
 
 let initialState = {};

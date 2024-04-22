@@ -5,8 +5,11 @@ const Dashboard = () => {
   const { data } = useSelector((state) => state.loadProviders.Provider);
 
   return (
-    <div>
-      <SideDashboard />
+    <div className="flex flex-row mt-[3.5rem]">
+      <div>
+        {" "}
+        <SideDashboard />
+      </div>
       <div>{data && <h1>Welcome {data.name}</h1>}</div>
     </div>
   );
