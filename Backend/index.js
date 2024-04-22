@@ -42,9 +42,10 @@ app.use("/booking", booking);
 //for chat application
 app.use("/messages",messagesRoutes);
 
-server.listen(PORT, () => {
-// route for payments
-app.use("/provider/razorpay", paymentRoute);
+
+  app.use("/provider/razorpay", paymentRoute);
+
+
 app.listen(PORT, () => {
 
   console.log(`Server running on port ${PORT}`);
