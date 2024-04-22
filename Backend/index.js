@@ -10,7 +10,7 @@ import clients from "./routes/client.js";
 import providers from "./routes/provider.js";
 import booking from "./routes/booking.js";
 import cookieParser from "cookie-parser";
-
+import paymentRoute from "./routes/paymentRoute.js";
 const PORT = 3000;
 import { app, server } from "./socket/socket.js";
 
@@ -38,9 +38,14 @@ app.use("/provider", providers);
 //route for booking
 app.use("/booking", booking);
 
+
 //for chat application
 app.use("/messages",messagesRoutes);
 
 server.listen(PORT, () => {
+// route for payments
+app.use("/provider/razorpay", paymentRoute);
+app.listen(PORT, () => {
+
   console.log(`Server running on port ${PORT}`);
 });

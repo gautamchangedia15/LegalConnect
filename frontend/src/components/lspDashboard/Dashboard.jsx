@@ -1,15 +1,16 @@
 import React from "react";
 import SideDashboard from "./SideDashboard";
-import AllClients from "./Features/AllClients";
-import Createbooking from "./Features/Createbooking";
-import Pastbooking from "./Features/Pastbooking";
-import Payment from "./Features/Payment";
-import UpcommingSlots from "./Features/UpcommingSlots";
-
+import { useSelector } from "react-redux";
 const Dashboard = () => {
+  const { data } = useSelector((state) => state.loadProviders.Provider);
+
   return (
-    <div>
-      <SideDashboard />
+    <div className="flex flex-row mt-[3.5rem]">
+      <div>
+        {" "}
+        <SideDashboard />
+      </div>
+      <div>{data && <h1>Welcome {data.name}</h1>}</div>
     </div>
   );
 };

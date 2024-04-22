@@ -32,8 +32,12 @@ import Pastbooking from "./components/lspDashboard/Features/Pastbooking";
 import Createbooking from "./components/lspDashboard/Features/Createbooking";
 import AllClients from "./components/lspDashboard/Features/AllClients";
 import Payment from "./components/lspDashboard/Features/Payment";
+
 import Chat from "./components/Chat/Chat";
 import About from "./components/About/About";
+
+import LspPayment from "./components/Payment/LspPayment";
+
 export default function App() {
   const dispatch = useDispatch();
   const { client } = useSelector((state) => state.user);
@@ -68,6 +72,7 @@ export default function App() {
       <Router>
         <NavigationBar />
         <Routes>
+          <Route exact path="/pay" element={<LspPayment />} />
           <Route exact path="/" element={<Home />} />
           <Route exact path="/service" element={<ServicePage />} />
           <Route exact path="/about" element={<About />} />

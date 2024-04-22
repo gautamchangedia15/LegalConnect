@@ -2,6 +2,11 @@ import admin from "../firebase.js";
 import bcrypt from "bcrypt";
 import { generateAccessToken, verifyAccessToken } from "../config/jwtConfig.js";
 import jwt from "jsonwebtoken";
+import axios from "axios";
+import crypto from "crypto";
+// Razorpay API credentials
+const apiKey = process.env.API_KEY;
+const apiSecret = process.env.API_SECRET;
 const db = admin.firestore();
 const providerCollection = db.collection("providers");
 const getAll = async (req, res) => {
@@ -77,9 +82,50 @@ const addProfile = async (req, res) => {
       enrollementId,
       verified: false,
       availability: [], //to further store time slots
+      razorpayAccount: {},
+      accountStatus: "initial",
+      clients: [],
+      payments: [],
     });
+    // create linked account
+    const response = await axios.post(
+      "https://api.razorpay.com/v2/accounts",
+      {
+        email: email,
+        phone: "9000090000",
+        type: "route",
+        reference_id: docRef.id,
+        legal_business_name: "Acme Corp",
+        business_type: "partnership",
+        contact_name: "Gaurav Kumar",
+        profile: {
+          category: "healthcare",
+          subcategory: "clinic",
+          addresses: {
+            registered: {
+              street1: "507, Koramangala 1st block",
+              street2: "MG Road",
+              city: "Bengaluru",
+              state: "KARNATAKA",
+              postal_code: "560034",
+              country: "IN",
+            },
+          },
+        },
+        legal_info: {
+          pan: "AABFL1734C",
+          gst: "18AABCU9603R1ZM",
+        },
+      },
 
-    console.log(docRef.id);
+      {
+        auth: {
+          username: apiKey,
+          password: apiSecret,
+        },
+      }
+    );
+
     const token = jwt.sign(
       { userId: docRef.id },
       process.env.JWT_SECRET_KEY,
@@ -87,7 +133,12 @@ const addProfile = async (req, res) => {
       { expiresIn: "10d" }
     );
 
-    res
+    const collectionRef = db.collection("providers").doc(docRef.id);
+    await collectionRef.update({
+      razorpayAccount: response.data,
+      accountStatus: "account linked",
+    });
+    return res
       .cookie("token", token, {
         httpOnly: true,
         secure: true,
@@ -97,6 +148,7 @@ const addProfile = async (req, res) => {
       .json({
         message: "Provider data submitted for verification",
         id: docRef.id,
+        data: response.data,
       });
   } catch (error) {
     console.error("Error submitting provider:", error);
@@ -196,9 +248,11 @@ const currentProvider = async (req, res) => {
         }
         const providerData = docSnapshot.data();
         delete providerData.password;
-        return res.status(200).json({ success: true, data: providerData });
+        return res.status(200).json({
+          success: true,
+          data: { id: decoded.user.userId, ...providerData },
+        });
       } catch (error) {
-        console.error("Error fetching document:", error.message);
         return res
           .status(500)
           .json({ success: false, error: "Failed to fetch client document" });
@@ -206,6 +260,51 @@ const currentProvider = async (req, res) => {
     });
   } catch (error) {
     // console.error("Error processing request:", error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};
+const addClientData = async (req, res) => {
+  try {
+    const { providerId, clientsData } = req.body;
+
+    const providerDoc = await db.collection("providers").doc(providerId).get();
+    if (!providerDoc.exists) {
+      return res.status(404).json({ error: "Provider not found" });
+    }
+    const providerRef = db.collection("providers").doc(providerId);
+
+    // Used FieldValue.arrayUnion for pushing into array
+    await providerRef.update({
+      clients: admin.firestore.FieldValue.arrayUnion(clientsData),
+    });
+    return res
+      .status(200)
+      .json({ success: true, message: "Client added successfully" });
+  } catch (error) {
+    console.error("Error adding client:", error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+const addPaymentData = async (req, res) => {
+  try {
+    const { providerId, PaymentData } = req.body;
+
+    const providerDoc = await db.collection("providers").doc(providerId).get();
+    if (!providerDoc.exists) {
+      return res.status(404).json({ error: "Provider not found" });
+    }
+    const providerRef = db.collection("providers").doc(providerId);
+
+    // Used FieldValue.arrayUnion for pushing into array
+    await providerRef.update({
+      payments: admin.firestore.FieldValue.arrayUnion(PaymentData),
+    });
+    return res
+      .status(200)
+      .json({ success: true, message: "Payment added successfully" });
+  } catch (error) {
+    console.error("Error adding payment:", error);
     return res.status(500).json({ success: false, error: error.message });
   }
 };
@@ -217,4 +316,6 @@ export {
   providerLogin,
   providerLogout,
   currentProvider,
+  addClientData,
+  addPaymentData,
 };
