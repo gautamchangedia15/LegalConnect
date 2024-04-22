@@ -4,11 +4,16 @@ import App from "./App.jsx";
 import "./index.css";
 import store from "./store.js";
 import { Provider } from "react-redux";
-
+import { AuthContextProvider } from "./components/Chat/context/AuthContext.jsx";
+import { SocketContextProvider } from "./components/Chat/context/SocketContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <AuthContextProvider>
+        <SocketContextProvider>
+          <App />
+        </SocketContextProvider>
+      </AuthContextProvider>
     </React.StrictMode>
   </Provider>
 );

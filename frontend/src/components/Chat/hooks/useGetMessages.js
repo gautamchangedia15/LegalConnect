@@ -1,28 +1,37 @@
 import { useEffect, useState } from "react";
+import axios from "axios"
 import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
+import { server } from "../../../store";
 
 const useGetMessages = () => {
 	const [loading, setLoading] = useState(false);
 	const { messages, setMessages, selectedConversation } = useConversation();
 
+	
 	useEffect(() => {
 		const getMessages = async () => {
 			setLoading(true);
 			try {
-				const res = await fetch(`/api/messages/${selectedConversation._id}`);
-				const data = await res.json();
-				if (data.error) throw new Error(data.error);
+				const res = await axios.get(`${server}/messages/getMessages/${selectedConversation.id}`,{withCredentials:true});
+				const data = res.data;
+				console.log(`useGetMessages ${selectedConversation.id} \n${server}/messages/getMessages/${selectedConversation.id}`,data);
 				setMessages(data);
 			} catch (error) {
-				toast.error(error.message);
+				console.error(error.message);
 			} finally {
 				setLoading(false);
 			}
 		};
 
-		if (selectedConversation?._id) getMessages();
-	}, [selectedConversation?._id, setMessages]);
+		if (selectedConversation?.id){ 
+			getMessages();
+			console.log("Hello");
+		}
+
+	}, [selectedConversation?.id, setMessages]);
+
+	
 
 	return { messages, loading };
 };
