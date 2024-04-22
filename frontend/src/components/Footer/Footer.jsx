@@ -2,7 +2,7 @@ import { Typography } from "@material-tailwind/react";
  
 export function Footer() {
   return (
-    <footer className="  bottom-0 left-0 right-0 bg-white flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t border-blue-gray-50 py-6 text-center md:justify-between px-4 md:px-12">
+    <footer className=" mt-20 bottom-0 left-0 right-0 bg-white flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t border-blue-gray-50 py-6 text-center md:justify-between px-4 md:px-12">
       <Typography color="blue-gray" className="font-normal">
         &copy; Legal Connect
       </Typography>

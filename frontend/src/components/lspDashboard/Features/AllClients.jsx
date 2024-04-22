@@ -1,12 +1,15 @@
 import React from "react";
 import SideDashboard from "../SideDashboard";
+import Chat from "../../Chat/Chat";
 
 const AllClients = () => {
   return (
-    <>
+    <div className="flex">
       <SideDashboard />
-      <div>AllClients</div>
-    </>
+      <div>
+        <Chat/>
+      </div>
+    </div>
   );
 };
 
