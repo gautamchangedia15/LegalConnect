@@ -145,6 +145,9 @@ export default function App() {
               element={<Payment />}
             />
             {/* <Route exact path="/provider/dashboard/chat" element={<Chat />} /> */}
+
+            {/* chat */}
+            <Route exact path="/client/messages" element={<Chat />} />
           </Routes>
         ) : (
           <></>

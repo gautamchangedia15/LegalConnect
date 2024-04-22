@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { IoReorderThreeOutline, IoSearch } from "react-icons/io5";
+import { IoChatbubbleEllipsesSharp, IoReorderThreeOutline, IoSearch } from "react-icons/io5";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProvider } from "../../action/providerAction";
 import { logoutClient } from "../../action/clientAction";
+import { BsChat } from "react-icons/bs";
 
 
 
@@ -120,7 +121,7 @@ function NavigationBar() {
         <div>
           <button
             onClick={() =>
-              dispatch(getProvider("", "", search)) && Navigate("/service")
+              dispatch(getProvider("", "", search)) && navigate("/service")
             }
             className="bg-gray-800 border border-gray-300 h-10 text-white font-bold text-xl text- px-4 py-2 rounded-md">
             <IoSearch />
@@ -141,7 +142,9 @@ function NavigationBar() {
                   <li>Dashboard</li>
                 </Link>
               ) : (
-                <></>
+                <Link to={"/client/messages"}>
+                  <li> <IoChatbubbleEllipsesSharp size={20} /></li>
+                  </Link>
               )}
 
               {role == "Client" ? (
@@ -153,18 +156,21 @@ function NavigationBar() {
               )}
               <Link to={"/about"}>
 
-              <li>About</li>
+                <li>About</li>
               </Link>
               <li>Contact</li>
               {isAuthenticated && isAuthenticated ? (
-                <button
-                  onClick={() => {
-                    dispatch(logoutClient());
-                    Navigate("/");
-                    window.location.reload();
-                  }}>
-                  Logout
-                </button>
+                <>
+                  
+                  <button
+                    onClick={() => {
+                      dispatch(logoutClient());
+                      navigate("/");
+                      window.location.reload();
+                    }}>
+                    Logout
+                  </button>
+                </>
               ) : (
                 <>
                   <Link to={"/clientLogin"}>
@@ -196,7 +202,7 @@ function NavigationBar() {
                 <div className="flex justify-between gap-12 ">
                   <Link to={"/service"}>
                     <li>Find a service</li>
-                  </Link> 
+                  </Link>
                   <Link to={"/clientLogin"}>
                     <li>Login</li>
                     <li>Login</li>
@@ -209,7 +215,7 @@ function NavigationBar() {
                   </Link>
                 </div>
               )
-            } 
+            }
 
           </div>
 
