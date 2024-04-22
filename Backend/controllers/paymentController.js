@@ -91,14 +91,48 @@ export const createOrder = async (req, res) => {
       }
     );
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: data.data,
     });
   } catch (error) {
-    res.status(200).json({
+    return res.status(200).json({
       success: false,
       error: error.message,
+    });
+  }
+};
+
+export const capturePayment = async (req, res) => {
+  const { paymentId, amount } = req.body;
+  try {
+    const url = `https://api.razorpay.com/v1/payments/${paymentId}/capture`;
+
+    const data = await axios.post(
+      url,
+      {
+        amount: amount,
+        currency: "INR",
+      },
+      {
+        auth: {
+          username: apiKey,
+          password: apiSecret,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Payment Captured Successfully",
+    });
+  } catch (error) {
+    return res.status(200).json({
+      success: false,
+      error: `Error Capturing Payment: ${error}`,
     });
   }
 };

@@ -35,6 +35,7 @@ const addClient = async (req, res) => {
       email,
       password: hashedPassword,
       role: "Client",
+      services: [],
     });
 
     const docSnapshot = await docRef.get();
@@ -158,22 +159,31 @@ const currentClient = async (req, res) => {
   }
 };
 
-export { addClient, clientLogin, clientLogout, currentClient };
+const addServices = async (req, res) => {
+  try {
+    const { serviceData, clientId } = req.body;
 
-// try {
-//   // Retrieve the document from Firestore by ID
-//   const docRef = db.collection('clients').doc(decoded.userId);
-//   const docSnapshot = await docRef.get();
+    // Check if client exists
+    const clientDoc = await db.collection("clients").doc(clientId).get();
+    if (!clientDoc.exists) {
+      return res
+        .status(404)
+        .json({ success: false, error: "Client not found" });
+    }
 
-//   if (!docSnapshot.exists) {
-//       return res.status(404).json({ error: 'Document not found' });
-//   }
+    // Add service to client's services array
+    const updatedServices = [...clientDoc.data().services, { ...serviceData }];
+    await db
+      .collection("clients")
+      .doc(clientId)
+      .update({ services: updatedServices });
 
-//   const clientData = docSnapshot.data();
-//   return res.json(clientData);
-// } catch (error) {
-//   console.error('Error fetching document:', error);
-//   return res.status(500).json({ error: 'Failed to fetch document' });
-// }
-
-// export {addClient, clientLogin}
+    return res.status(200).json({ message: "Service added successfully" });
+  } catch (error) {
+    console.error("Error adding service:", error);
+    return res
+      .status(500)
+      .json({ error: "Error adding service", message: error.message });
+  }
+};
+export { addClient, clientLogin, clientLogout, currentClient, addServices };
