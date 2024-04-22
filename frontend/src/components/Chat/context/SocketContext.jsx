@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useAuthContext } from "./AuthContext";
 import io from "socket.io-client";
+import { server } from "../../../store";
 
 const SocketContext = createContext();
 
@@ -13,11 +14,12 @@ export const SocketContextProvider = ({ children }) => {
 	const [onlineUsers, setOnlineUsers] = useState([]);
 	const { authUser } = useAuthContext();
 
+  console.log("authUser: ",authUser);
 	useEffect(() => {
 		if (authUser) {
-			const socket = io("https://chat-app-yt.onrender.com", {
+			const socket = io(`${server}`, {
 				query: {
-					userId: authUser._id,
+					userId: authUser,
 				},
 			});
 

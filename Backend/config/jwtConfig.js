@@ -15,9 +15,6 @@ const verifyAccessToken = (req, res, next) => {
   if (!token) {
     return res.status(401).send("Unauthorized");
   }
-
-  //const token = authHeader.split(" ")[1]; // Assuming 'Bearer <token>' format
-
   jwt.verify(token, secret, (err, decoded) => {
     if (err) {
       return res.status(403).send("Forbidden (Invalid token)");

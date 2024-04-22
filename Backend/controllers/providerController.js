@@ -77,6 +77,8 @@ const addProfile = async (req, res) => {
       enrollementId,
       verified: false,
       availability: [], //to further store time slots
+      razorpayAccount: {},
+      accountStatus: "initial",
     });
 
     console.log(docRef.id);
@@ -100,7 +102,7 @@ const addProfile = async (req, res) => {
       });
   } catch (error) {
     console.error("Error submitting provider:", error);
-    res.status(500).json("Error submitting provider");
+    return res.status(500).json("Error submitting provider");
   }
 };
 
@@ -151,6 +153,7 @@ const providerLogin = async (req, res) => {
       }
     }
   } catch (error) {
+    console.log("Failed to log in provider",error.message);
     res
       .status(500)
       .json({ success: false, error: "Failed to log in provider" });
@@ -196,7 +199,12 @@ const currentProvider = async (req, res) => {
         }
         const providerData = docSnapshot.data();
         delete providerData.password;
-        return res.status(200).json({ success: true, data: providerData });
+        return res
+          .status(200)
+          .json({
+            success: true,
+            data: { id: decoded.user.userId, ...providerData },
+          });
       } catch (error) {
         console.error("Error fetching document:", error.message);
         return res

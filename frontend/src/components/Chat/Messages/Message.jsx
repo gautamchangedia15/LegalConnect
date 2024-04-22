@@ -5,10 +5,10 @@ import useConversation from "../zustand/useConversation";
 const Message = ({ message }) => {
 	const { authUser } = useAuthContext();
 	const { selectedConversation } = useConversation();
-	const fromMe = message.senderId === authUser._id;
-	const formattedTime = extractTime(message.createdAt);
+	const fromMe = message.senderId === authUser;
+	const formattedTime = message.timeStamp;
 	const chatClassName = fromMe ? "chat-end" : "chat-start";
-	const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic;
+	const profilePic = fromMe ?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdQK3Ih0TEYvLOjU23ZylvIYQsi77V_gUo1fhX9uZPHg&s" : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
 	const bubbleBgColor = fromMe ? "bg-blue-500" : "";
 
 	const shakeClass = message.shouldShake ? "shake" : "";
