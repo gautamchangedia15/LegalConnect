@@ -135,6 +135,7 @@ const addProfile = async (req, res) => {
 
     const collectionRef = db.collection("providers").doc(docRef.id);
     await collectionRef.update({
+      accId: response.data.id,
       razorpayAccount: response.data,
       accountStatus: "account linked",
     });

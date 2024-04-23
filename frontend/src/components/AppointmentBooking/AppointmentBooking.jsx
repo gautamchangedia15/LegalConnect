@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Chip } from "@material-tailwind/react";
 import RazorpayButton from "../Payment/RazorpayButton";
 import { useParams } from "react-router-dom";
+import { loadProviders } from "../../reducer/providerReducer";
 const AppointmentBooking = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
@@ -10,6 +11,7 @@ const AppointmentBooking = () => {
   const [selectedSolt, setSelectedSolt] = useState({});
   const { provider } = useSelector((state) => state.providerDetails);
   const { data } = useSelector((state) => state.user.client);
+  const dispatch = useDispatch;
   const { id } = useParams();
   // Load availability data on component mount
   useEffect(() => {
@@ -135,6 +137,8 @@ const AppointmentBooking = () => {
                 clientName={data.name}
                 clientEmail={data.email}
                 slot={selectedSolt}
+                providerAcc={provider.accId}
+                providerName={provider.name}
               />
             </button>
           </div>

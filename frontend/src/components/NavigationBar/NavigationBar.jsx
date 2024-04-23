@@ -6,10 +6,7 @@ import { getProvider } from "../../action/providerAction";
 import { logoutClient } from "../../action/clientAction";
 import { BsChat } from "react-icons/bs";
 
-
-
 function NavigationBar() {
-
   const { isAuthenticated, role } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
@@ -29,45 +26,45 @@ function NavigationBar() {
   };
 
   const useWindowDimensions = () => {
-    const hasWindow = typeof window !== "undefined"
+    const hasWindow = typeof window !== "undefined";
 
     function getWindowDimensions() {
-      const width = hasWindow ? window.innerWidth : null
-      const height = hasWindow ? window.innerHeight : null
+      const width = hasWindow ? window.innerWidth : null;
+      const height = hasWindow ? window.innerHeight : null;
       return {
         width,
         height,
-      }
+      };
     }
 
     const [windowDimensions, setWindowDimensions] = useState(
       getWindowDimensions()
-    )
+    );
 
     useEffect(() => {
       if (hasWindow) {
         function handleResize() {
-          setWindowDimensions(getWindowDimensions())
+          setWindowDimensions(getWindowDimensions());
         }
 
-        window.addEventListener("resize", handleResize)
-        return () => window.removeEventListener("resize", handleResize)
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
       }
-    }, [hasWindow])
+    }, [hasWindow]);
 
-    return windowDimensions
-  }
+    return windowDimensions;
+  };
 
-  const { height, width } = useWindowDimensions()
-  console.log("height", height)
-  console.log("width", width)
+  const { height, width } = useWindowDimensions();
+  console.log("height", height);
+  console.log("width", width);
   const checkValidity = () => {
     if (width > 768) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
-  }
+  };
   // const breakpoint = 768
   // function isbig(){
   //   if(width > breakpoint){
@@ -75,17 +72,17 @@ function NavigationBar() {
   //   }else{
   //     return false
   //   }
-  // } 
+  // }
   useEffect(() => {
     if (width > 768) {
-      setIsScreenSize(true)
+      setIsScreenSize(true);
     } else {
-      setIsScreenSize(false)
+      setIsScreenSize(false);
     }
-  }, [width])
+  }, [width]);
 
   function handleMenu() {
-    setMenuOpen(!menuOpen)
+    setMenuOpen(!menuOpen);
   }
 
   const inputHandler = (e) => {
@@ -93,20 +90,22 @@ function NavigationBar() {
   };
 
   return (
-    <>{isScreenSize ? <div
-      className={`flex justify-between fixed top-0 left-0 right-0 h-16 ${role == "Provider" ? "bg-gray-50" : "bg-white"
-        } shadow-sm z-10 px-4 py-2 items-center Px-10`}>
-      <div className="flex justify-between gap-12 ">
-        <Link to={"/"}>
-          {" "}
-          <div className="text-2xl font-bold ">
-            <span className="text-indigo-500">
-              Legal
-            </span>
-            <span className="text-green-800">
-              Connect
-            </span>
+    <>
+      {isScreenSize ? (
+        <div
+          className={`flex justify-between fixed top-0 left-0 right-0 h-16 ${
+            role == "Provider" ? "bg-gray-50" : "bg-white"
+          } shadow-sm z-10 px-4 py-2 items-center Px-10`}>
+          <div className="flex justify-between gap-12 ">
+            <Link to={"/"}>
+              {" "}
+              <div className="text-2xl font-bold ">
+                <span className="text-indigo-500">Legal</span>
+                <span className="text-green-800">Connect</span>
+              </div>
+            </Link>
           </div>
+
         </Link>
       </div>
       <div className="flex justify-between gap-4 items-center ">
@@ -176,27 +175,58 @@ function NavigationBar() {
                   <Link to={"/clientLogin"}>
                     <li>Login</li>
                   </Link>
-                </>
-              )}
-            </ul>
-          </nav>
+                  {role == "Provider" ? (
+                    <Link to={"/provider/dashboard"}>
+                      <li>Dashboard</li>
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
+
+                  {role == "Client" ? (
+                    <Link to={"/client/myservices"}>
+                      <li>My services</li>
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
+                  <Link to={"/about"}>
+                    <li>About</li>
+                  </Link>
+                  <li>Contact</li>
+                  {isAuthenticated && isAuthenticated ? (
+                    <button
+                      onClick={() => {
+                        dispatch(logoutClient());
+                        navigate("/");
+                        window.location.reload();
+                      }}>
+                      Logout
+                    </button>
+                  ) : (
+                    <>
+                      <Link to={"/clientLogin"}>
+                        <li>Login</li>
+                      </Link>
+                    </>
+                  )}
+                </ul>
+              </nav>
+            </div>
+          </div>
         </div>
-      </div>
-    </div> :
-      // same about navbar but with ham burger
-      (
+      ) : (
+        // same about navbar but with ham burger
         <div>
           <div className="flex justify-between fixed top-0 left-0 right-0 h-16 bg-white shadow-sm z-10 px-4 py-2 items-center ">
-            <div className="header">
-              LegalConnect
-            </div>
+            <div className="header">LegalConnect</div>
 
             <button onClick={handleMenu} className="text-3xl">
               <IoReorderThreeOutline />
             </button>
-
           </div>
           <div>
+
             {
               menuOpen && (
                 <div className="flex justify-between gap-12 ">
@@ -218,15 +248,10 @@ function NavigationBar() {
             }
 
           </div>
-
         </div>
-      )
-    }
-
+      )}
     </>
-  )
+  );
 }
-
-
 
 export default NavigationBar;
