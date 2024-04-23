@@ -7,5 +7,6 @@ module.exports = withMT({
   theme: {
     extend: {},
   },
-  // plugins: [require("daisyui")],
+  // eslint-disable-next-line no-undef
+  plugins: [require("daisyui")],
 })

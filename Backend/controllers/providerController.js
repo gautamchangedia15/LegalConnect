@@ -153,7 +153,7 @@ const addProfile = async (req, res) => {
       });
   } catch (error) {
     console.error("Error submitting provider:", error);
-    res.status(500).json("Error submitting provider");
+    return res.status(500).json("Error submitting provider");
   }
 };
 
@@ -204,6 +204,7 @@ const providerLogin = async (req, res) => {
       }
     }
   } catch (error) {
+    console.log("Failed to log in provider",error.message);
     res
       .status(500)
       .json({ success: false, error: "Failed to log in provider" });

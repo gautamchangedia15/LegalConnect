@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { IoReorderThreeOutline, IoSearch } from "react-icons/io5";
+import { IoChatbubbleEllipsesSharp, IoReorderThreeOutline, IoSearch } from "react-icons/io5";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProvider } from "../../action/providerAction";
 import { logoutClient } from "../../action/clientAction";
+import { BsChat } from "react-icons/bs";
 
 function NavigationBar() {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
@@ -104,33 +105,75 @@ function NavigationBar() {
               </div>
             </Link>
           </div>
-          <div className="flex justify-between gap-4 items-center ">
-            <div>
-              <input
-                type="text"
-                className="w-[300px] bg-white h-10 border border-gray-300 rounded-md px-2 py-1"
-                value={search}
-                onChange={(e) => inputHandler(e)}
-              />
-            </div>
-            <div>
-              <button
-                onClick={() =>
-                  dispatch(getProvider("", "", search)) && navigate("/service")
-                }
-                className="bg-gray-800 border border-gray-300 h-10 text-white font-bold text-xl text- px-4 py-2 rounded-md">
-                <IoSearch />
-              </button>
-            </div>
-          </div>
-          <div></div>
 
-          <div>
-            <div>
-              <nav>
-                <ul className="flex justify-between gap-12">
-                  <Link to={"/service"}>
-                    <li>Find a service</li>
+        </Link>
+      </div>
+      <div className="flex justify-between gap-4 items-center ">
+        <div>
+          <input
+            type="text"
+            className="w-[300px] bg-white h-10 border border-gray-300 rounded-md px-2 py-1"
+            value={search}
+            onChange={(e) => inputHandler(e)}
+          />
+        </div>
+        <div>
+          <button
+            onClick={() =>
+              dispatch(getProvider("", "", search)) && navigate("/service")
+            }
+            className="bg-gray-800 border border-gray-300 h-10 text-white font-bold text-xl text- px-4 py-2 rounded-md">
+            <IoSearch />
+          </button>
+        </div>
+      </div>
+      <div></div>
+
+      <div>
+        <div>
+          <nav>
+            <ul className="flex justify-between gap-12">
+              <Link to={"/service"}>
+                <li>Find a service</li>
+              </Link>
+              {role == "Provider" ? (
+                <Link to={"/provider/dashboard"}>
+                  <li>Dashboard</li>
+                </Link>
+              ) : (
+                <Link to={"/client/messages"}>
+                  <li> <IoChatbubbleEllipsesSharp size={20} /></li>
+                  </Link>
+              )}
+
+              {role == "Client" ? (
+                <Link to={"/client/myservices"}>
+                  <li>My services</li>
+                </Link>
+              ) : (
+                <></>
+              )}
+              <Link to={"/about"}>
+
+                <li>About</li>
+              </Link>
+              <li>Contact</li>
+              {isAuthenticated && isAuthenticated ? (
+                <>
+                  
+                  <button
+                    onClick={() => {
+                      dispatch(logoutClient());
+                      navigate("/");
+                      window.location.reload();
+                    }}>
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to={"/clientLogin"}>
+                    <li>Login</li>
                   </Link>
                   {role == "Provider" ? (
                     <Link to={"/provider/dashboard"}>
@@ -183,23 +226,27 @@ function NavigationBar() {
             </button>
           </div>
           <div>
-            {menuOpen && (
-              <div className="flex justify-between gap-12 ">
-                <Link to={"/service"}>
-                  <li>Find a service</li>
-                </Link>
-                <Link to={"/clientLogin"}>
-                  <li>Login</li>
-                  <li>Login</li>
-                  <li>Login</li>
-                  <li>Login</li>
-                  <li>Login</li>
-                  <li>Login</li>
-                  <li>Login</li>
-                  <li>Login</li>
-                </Link>
-              </div>
-            )}
+
+            {
+              menuOpen && (
+                <div className="flex justify-between gap-12 ">
+                  <Link to={"/service"}>
+                    <li>Find a service</li>
+                  </Link>
+                  <Link to={"/clientLogin"}>
+                    <li>Login</li>
+                    <li>Login</li>
+                    <li>Login</li>
+                    <li>Login</li>
+                    <li>Login</li>
+                    <li>Login</li>
+                    <li>Login</li>
+                    <li>Login</li>
+                  </Link>
+                </div>
+              )
+            }
+
           </div>
         </div>
       )}
