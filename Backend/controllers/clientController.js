@@ -47,6 +47,7 @@ const addClient = async (req, res) => {
       { expiresIn: "10d" }
     );
 
+    console.log("Client added successfully",docRef.id );
     res
       .cookie("token", token, {
         httpOnly: true,

@@ -13,7 +13,7 @@ const RazorpayButton = (props) => {
   const navigate = useNavigate();
   const handleSubmit = async () => {
     try {
-      console.log("hel;llllllllll", props.slotAmount, props.slot.price);
+      // console.log("hel;llllllllll", props.slotAmount, props.slot.price);
       const response = await axios.post(
         `http://localhost:3000/provider/razorpay/createorder`,
         {
@@ -78,6 +78,8 @@ const RazorpayButton = (props) => {
                 providerId: props.providerId,
                 clientId: props.clientId,
                 serviceData: {
+                  providerId: props.providerId,
+                  name: props.providerName,
                   slotId: props.slot.slotId,
                   slot: props.slot,
                   PaymentId: res.razorpay_payment_id,

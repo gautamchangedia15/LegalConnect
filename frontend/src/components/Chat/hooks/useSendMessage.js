@@ -10,11 +10,10 @@ const useSendMessage = () => {
 	const sendMessage = async (message) => {
 		setLoading(true);
 		try {
-			const res = await axios.post(`${server}/messages/send/${selectedConversation.id}`,{message},
+			const res = await axios.post(`${server}/messages/send/${selectedConversation?.providerId || selectedConversation?.id}`,{message},
 				{withCredentials: true}
 			  )
 			const data = res.data;
-			console.log("use send mme",data);
 			if (data.error) throw new Error(data.error);
 			setMessages([...messages, data]);
 		} catch (error) {

@@ -15,6 +15,7 @@ function LawyerRegister() {
   const [about, setAbout] = useState("");
   const [propExp, setPropExp] = useState("");
   const [enrollementId, setenrollementId] = useState("");
+  const [domain, setDomain] = useState("");
   const [page, setPage] = useState(1);
 
   const handleSubmit = async (e) => {
@@ -30,8 +31,7 @@ function LawyerRegister() {
       about,
       propExp,
       enrollementId,
-
-      domain: "any",
+      domain
     };
 
     dispatch(registerProvider(registrationData));
@@ -92,6 +92,8 @@ function LawyerRegister() {
             enrollementId={enrollementId}
             setenrollementId={setenrollementId}
 
+            domain={domain}
+            setDomain={setDomain}
           />
         </div>
       </div>
@@ -182,6 +184,9 @@ const Page2 = ({
   enrollementId,
   setenrollementId,
 
+  domain,
+  setDomain
+
 }) => {
   return (
     <div className=" page-2 min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -248,6 +253,23 @@ const Page2 = ({
                 placeholder="Enter your city"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="domain"
+                className="block text-sm font-medium text-gray-700">
+                Domain
+              </label>
+              <input
+                id="domain"
+                name="domain"
+                type="text"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Domain"
+                value={domain}
+                onChange={(e) => setDomain(e.target.value)}
               />
             </div>
             <div>

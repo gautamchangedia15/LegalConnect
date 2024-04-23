@@ -46,7 +46,6 @@ app.use("/messages",messagesRoutes);
   app.use("/provider/razorpay", paymentRoute);
 
 
-app.listen(PORT, () => {
-
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

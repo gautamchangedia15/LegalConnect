@@ -12,22 +12,24 @@ const useGetConversations = () => {
   useEffect(() => {
     setLoading(true);
     if (data) {
-      console.log("helloooo of data", data.clients);
-      const clients=data.clients;
+      const clients = data.clients;
       const uniqueClientIds = new Set(clients.map((obj) => obj.clientId));
       // Create a new array with unique objects
       const uniqueData = [];
       clients.forEach((obj) => {
         if (uniqueClientIds.has(obj.clientId)) {
-          uniqueData.push(obj);
+          uniqueData.push({id:obj.clientId,...obj});
           uniqueClientIds.delete(obj.clientId); // Remove processed clientId to avoid duplicates
         }
       });
+      // console.log("helloooo from provider", uniqueData);
       setConversations(uniqueData);
     }
 
     if (client && client.data) {
-      console.log("helloooo from client", client);
+      const filteredServices = client.data.services.filter(service => service.hasOwnProperty("providerId"));
+      // console.log("helloooo from client", client.data);
+      setConversations(filteredServices);
     }
     setLoading(false);
   }, [data, client]);
