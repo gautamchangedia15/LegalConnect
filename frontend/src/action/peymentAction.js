@@ -7,7 +7,14 @@ import { server } from "../store";
 import axios from "axios";
 
 export const confirmPayment =
-  ({ clientData, paymentData, slotData, servicesData, capturePayment }) =>
+  ({
+    clientData,
+    paymentData,
+    slotData,
+    servicesData,
+    capturePayment,
+    transferPayment,
+  }) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -27,7 +34,20 @@ export const confirmPayment =
         status: "Payment captured successfully",
         payload: capturePaymentData,
       });
+      // paayment transfer
+      const { transferPaymentData } = await axios.post(
+        `${server}/provider/razorpay/transferPayments`,
+        {
+          ...transferPayment,
+        }
+      );
+      dispatch({
+        type: CONFIRM_PAYMENT_SUCCESS,
+        status: "Payment transfered successfully",
+        payload: transferPaymentData,
+      });
 
+      //
       const { addClientData } = await axios.post(
         `${server}/provider/addClientData`,
         { ...clientData }

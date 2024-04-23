@@ -35,7 +35,7 @@ export const createLinkedAcc = async (req, res) => {
     });
     return;
   } catch (error) {
-    res.status(200).json({
+    return res.status(200).json({
       success: false,
       error: error.message,
     });
@@ -135,4 +135,30 @@ export const capturePayment = async (req, res) => {
       error: `Error Capturing Payment: ${error}`,
     });
   }
+};
+
+export const transferPayments = async (req, res) => {
+  const { paymentId, transfers, providerID } = req.body;
+  var instance = new Razorpay({ key_id: apiKey, key_secret: apiSecret });
+
+  instance.payments
+    .transfer(paymentId, { transfers })
+    .then(async (response) => {
+      console.log("Transfer successful:", response);
+      const collectionRef = db.collection("providers").doc(providerID);
+      await collectionRef.update({
+        transfer: response.items,
+      });
+      return res.status(200).json({
+        success: true,
+        message: response.data || "Transfer Successful",
+      });
+    })
+    .catch((error) => {
+      console.error("Transfer failed:", error);
+      return res.status(200).json({
+        success: false,
+        error: error.message || "Transfer fail",
+      });
+    });
 };

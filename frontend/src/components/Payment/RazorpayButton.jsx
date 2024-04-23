@@ -88,6 +88,23 @@ const RazorpayButton = (props) => {
 
                 amount: parseInt(props.slot.price) * 100,
               },
+              transferPayment: {
+                providerID: props.providerId,
+                paymentId: res.razorpay_payment_id,
+                transfers: [
+                  {
+                    account: props.providerAcc,
+                    amount:
+                      parseInt(props.slot.price) * 100 -
+                      parseInt(props.slot.price) * 100 * 0.02,
+                    currency: "INR",
+                    notes: {
+                      name: props.providerName,
+                    },
+                    on_hold: false,
+                  },
+                ],
+              },
             })
           );
 
@@ -102,8 +119,8 @@ const RazorpayButton = (props) => {
       },
       notes: {
         address: "Legal connect Office",
-        providerID: props.providerID,
-        slot: props.slot,
+        // providerID: props.providerID,
+        // slot: props.slot,
       },
       theme: {
         color: "#2E7D32",
