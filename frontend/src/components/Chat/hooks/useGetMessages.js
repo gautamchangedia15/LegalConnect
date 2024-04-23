@@ -13,9 +13,8 @@ const useGetMessages = () => {
 		const getMessages = async () => {
 			setLoading(true);
 			try {
-				const res = await axios.get(`${server}/messages/getMessages/${selectedConversation.id}`,{withCredentials:true});
+				const res = await axios.get(`${server}/messages/getMessages/${selectedConversation?.clientId || selectedConversation?.id}`,{withCredentials:true});
 				const data = res.data;
-				console.log(`useGetMessages ${selectedConversation.id} \n${server}/messages/getMessages/${selectedConversation.id}`,data);
 				setMessages(data);
 			} catch (error) {
 				console.error(error.message);
@@ -26,7 +25,6 @@ const useGetMessages = () => {
 
 		if (selectedConversation?.id){ 
 			getMessages();
-			console.log("Hello");
 		}
 
 	}, [selectedConversation?.id, setMessages]);
