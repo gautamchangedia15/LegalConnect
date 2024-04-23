@@ -1,5 +1,5 @@
 import React from 'react';
-import Slots from '../Features/Slots/Slots';
+import Slots from './Features/Slots/Slots';
 
 const AvailabilityCalendar = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import SideDashboard from "../SideDashboard";
+import SideDashboard from "./SideDashboard";
 import { useSelector } from "react-redux";
-import LawyerProfile from "../../LawyerProfile/LawyerProfile1";
+import LawyerProfile from "../LawyerProfile/LawyerProfile1";
 import ProfileCard from './ProfileCard';
 import AvailabilityCalendar from './AvailabilityCalendar';
 import ClientsDashboard from "./ClientsDashboard";

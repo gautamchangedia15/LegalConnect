@@ -26,7 +26,7 @@ import {
   setRoleProvider,
 } from "./action/authAction";
 import { loadProvider } from "./action/providerAction";
-import Dashboard from "./components/lspDashboard/Dashboard/Dashboard";
+import Dashboard from "./components/lspDashboard/Dashboard";
 import UpcommingSlots from "./components/lspDashboard/Features/UpcommingSlots";
 import Pastbooking from "./components/lspDashboard/Features/Pastbooking";
 import Createbooking from "./components/lspDashboard/Features/Createbooking";
