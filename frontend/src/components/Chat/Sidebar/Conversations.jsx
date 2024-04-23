@@ -7,7 +7,7 @@ const Conversations = () => {
 		<div className='py-2 flex flex-col overflow-auto' key={conversations.id}>
 			{conversations.map((conversation, idx) => (
 				<Conversation
-					key={conversation.id}
+					key={conversation.clientId}
 					conversation={conversation}
 					lastIdx={idx === conversations.length - 1}
 				/>
