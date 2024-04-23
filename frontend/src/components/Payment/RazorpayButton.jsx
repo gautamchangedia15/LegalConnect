@@ -13,7 +13,7 @@ const RazorpayButton = (props) => {
   const navigate = useNavigate();
   const handleSubmit = async () => {
     try {
-      console.log("hel;llllllllll", props.slotAmount, props.slot.price);
+      // console.log("hel;llllllllll", props.slotAmount, props.slot.price);
       const response = await axios.post(
         `http://localhost:3000/provider/razorpay/createorder`,
         {
@@ -78,6 +78,8 @@ const RazorpayButton = (props) => {
                 providerId: props.providerId,
                 clientId: props.clientId,
                 serviceData: {
+                  providerId: props.providerId,
+                  name: props.providerName,
                   slotId: props.slot.slotId,
                   slot: props.slot,
                   PaymentId: res.razorpay_payment_id,
@@ -87,6 +89,23 @@ const RazorpayButton = (props) => {
                 razorpay_payment_id: res.razorpay_payment_id,
 
                 amount: parseInt(props.slot.price) * 100,
+              },
+              transferPayment: {
+                providerID: props.providerId,
+                paymentId: res.razorpay_payment_id,
+                transfers: [
+                  {
+                    account: props.providerAcc,
+                    amount:
+                      parseInt(props.slot.price) * 100 -
+                      parseInt(props.slot.price) * 100 * 0.02,
+                    currency: "INR",
+                    notes: {
+                      name: props.providerName,
+                    },
+                    on_hold: false,
+                  },
+                ],
               },
             })
           );
@@ -102,8 +121,8 @@ const RazorpayButton = (props) => {
       },
       notes: {
         address: "Legal connect Office",
-        providerID: props.providerID,
-        slot: props.slot,
+        // providerID: props.providerID,
+        // slot: props.slot,
       },
       theme: {
         color: "#2E7D32",

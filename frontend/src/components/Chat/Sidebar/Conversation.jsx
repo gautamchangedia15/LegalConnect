@@ -3,9 +3,9 @@ import useConversation from "../zustand/useConversation";
 
 const Conversation = ({ conversation, lastIdx }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
-  const isSelected = selectedConversation?.id === conversation.id;
+  const isSelected = (selectedConversation?.id || selectedConversation?.clientId) === conversation.id;
   const { onlineUsers } = useSocketContext();
-  const isOnline = onlineUsers.includes(conversation.id);
+  const isOnline = onlineUsers.includes(conversation.id)
 
   return (
     <>

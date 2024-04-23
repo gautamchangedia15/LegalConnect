@@ -126,7 +126,7 @@ const sendMessage = async (req, res) => {
 
 const getUserInteractionsList = async (req, res) => {
   try {
-    const userName = req.user.name || req.user.user.userId; // Assuming user name is retrieved
+    const userName = req.user.userId || req.user.user.userId; // Assuming user name is retrieved
 
     // 1. Find all conversations where the user's name appears in participants field (clients or providers)
     const conversationQuery = conversationCollection.where(

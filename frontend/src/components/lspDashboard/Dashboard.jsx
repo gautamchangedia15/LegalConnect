@@ -6,7 +6,18 @@ import ProfileCard from './ProfileCard';
 import AvailabilityCalendar from './AvailabilityCalendar';
 import ClientsDashboard from "./ClientsDashboard";
 const Dashboard = () => {
+
   const today = new Date();
+
+  // const { data } = useSelector((state) => state.loadProviders.Provider);
+  const { data } = useSelector((state) => state.loadProviders.Provider);
+  // const { client } = useSelector((state) => state.user);
+  // if (data && data.id) {
+  //   console.log(data.clients);
+  // } else {
+  //   console.log(client.data.services);
+  // }
+
 
 const { data } = useSelector((state) => state.loadProviders.Provider);
 console.log(data);

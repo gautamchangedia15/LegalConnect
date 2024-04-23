@@ -59,8 +59,8 @@ function NavigationBar() {
   }
 
   const { height, width } = useWindowDimensions()
-  console.log("height", height)
-  console.log("width", width)
+  // console.log("height", height)
+  // console.log("width", width)
   const checkValidity = () => {
     if (width > 768) {
       return true

@@ -4,10 +4,10 @@ import Conversation from "./Conversation";
 const Conversations = () => {
 	const { loading, conversations } = useGetConversations();
 	return (
-		<div className='py-2 flex flex-col overflow-auto' key={conversations.id}>
+		<div className='py-2 flex flex-col overflow-auto' key={conversations?.clientId || conversations?.id }>
 			{conversations.map((conversation, idx) => (
 				<Conversation
-					key={conversation.id}
+					key={conversations?.clientId || conversations?.id}
 					conversation={conversation}
 					lastIdx={idx === conversations.length - 1}
 				/>
