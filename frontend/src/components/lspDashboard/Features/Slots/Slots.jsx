@@ -23,7 +23,7 @@ function Slots(props) {
   }, [Provider]);
 
   return (
-    <div className="flex gap-4 flex-wrap">
+    <div className="flex gap-4 flex-wrap w-full justify-center  overflow-y-auto h-screen">
       {availability && availability ? (
         availability.map((item, index) => (
           <Slot

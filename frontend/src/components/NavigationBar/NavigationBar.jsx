@@ -142,9 +142,14 @@ function NavigationBar() {
                   <li>Dashboard</li>
                 </Link>
               ) : (
+                <>
                 <Link to={"/client/messages"}>
                   <li> <IoChatbubbleEllipsesSharp size={20} /></li>
                   </Link>
+                  <Link to={"/client/myservices"}>
+                  
+                  <li> My service</li></Link>
+                  </>
               )}
 
               {role == "Client" ? (
@@ -158,7 +163,9 @@ function NavigationBar() {
 
                 <li>About</li>
               </Link>
-              <li>Contact</li>
+              <Link to={"/contact"}> 
+                <li>Contact</li>
+              </Link>
               {isAuthenticated && isAuthenticated ? (
                 <>
                   

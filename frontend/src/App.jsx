@@ -26,7 +26,7 @@ import {
   setRoleProvider,
 } from "./action/authAction";
 import { loadProvider } from "./action/providerAction";
-import Dashboard from "./components/lspDashboard/Dashboard";
+import Dashboard from "./components/lspDashboard/Dashboard/Dashboard";
 import UpcommingSlots from "./components/lspDashboard/Features/UpcommingSlots";
 import Pastbooking from "./components/lspDashboard/Features/Pastbooking";
 import Createbooking from "./components/lspDashboard/Features/Createbooking";
@@ -37,6 +37,7 @@ import Chat from "./components/Chat/Chat";
 import About from "./components/About/About";
 
 import LspPayment from "./components/Payment/LspPayment";
+import Contact from "./components/Contact/Contact";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ export default function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/service" element={<ServicePage />} />
           <Route exact path="/about" element={<About />} />
-          <Route exact path="/contact" element={<Home />} />
+          <Route exact path="/contact" element={<Contact />} />
           <Route
             exact
             path="/service/providerprofile/:id"
@@ -89,7 +90,11 @@ export default function App() {
             exact
             path="/clientRegistration"
             element={<ClientRegistration />}
+
           />
+            <Route exact path="/client/messages" element={<Chat />} />
+            <Route exact path="/client/myservices" element={<MyServices />}/>
+
           {/* Lawyer */}
 
           <Route exact path="/lawyerLogin" element={<LawyerLogin />} />
@@ -147,7 +152,6 @@ export default function App() {
             {/* <Route exact path="/provider/dashboard/chat" element={<Chat />} /> */}
 
             {/* chat */}
-            <Route exact path="/client/messages" element={<Chat />} />
           </Routes>
         ) : (
           <></>

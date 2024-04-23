@@ -11,8 +11,10 @@ import providers from "./routes/provider.js";
 import booking from "./routes/booking.js";
 import cookieParser from "cookie-parser";
 import paymentRoute from "./routes/paymentRoute.js";
+
 const PORT = 3000;
 import { app, server } from "./socket/socket.js";
+// import { addFeedback } from "./routes/feedback.js";
 
 app.use(express.json());
 app.use(cookieParser());
@@ -41,6 +43,9 @@ app.use("/booking", booking);
 
 //for chat application
 app.use("/messages",messagesRoutes);
+
+
+// app.use("/feedback",addFeedback);
 
 
   app.use("/provider/razorpay", paymentRoute);

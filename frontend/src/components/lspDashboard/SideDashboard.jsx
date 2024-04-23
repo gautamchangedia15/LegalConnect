@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 const SideDashboard = () => {
   return (
     <div className=" h-screen border-r border-gray-700 min-w-60 max-w-96 sticky  top-0 left-0  shadow-lg  bg-gray-200 text-gray-700 overflow-y-auto mt-[5%]">
-      <div className="flex items-center justify-center h-20 border-b border-gray-700">
-        <h1 className="text-xl font-bold">Dashboard</h1>
-      </div>
+      <Link to={"/provider/dashboard"}>
+        <div className="flex items-center justify-center h-20 border-b border-gray-700">
+          <h1 className="text-xl font-bold">Dashboard</h1>
+        </div>
+      </Link>
 
       <div className="p-4 ">
         {/* <h2 className="text-lg font-semibold mb-4">Men  u</h2> */}
