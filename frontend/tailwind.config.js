@@ -4,9 +4,15 @@ module.exports = withMT({
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
-  theme: {
+  theme: {  
     extend: {},
+    
   },
+  
+    daisyui: {
+      themes: [],
+    
+ },
   // eslint-disable-next-line no-undef
   plugins: [require("daisyui")],
 })
